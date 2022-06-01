@@ -1,8 +1,8 @@
 # Sydney Chien
 
-number1= int(input("pick a number:"))
-number2= int(input("pick a number:"))
-m2= number1 * number1
-bmi= m2 / number2
+mass= int(input("pick a number:"))
+height= int(input("pick a number:"))
+m2= mass * mass
+bmi= m2 / height
 print(bmi) 
-print(m2 / number2)
+print(m2 / height)
