@@ -9,7 +9,10 @@ print(m2 / height)
 
 if bmi < 14.5:
     print("you're underweight")
-if bmi == 40:
+if bmi >= 14.5 and bmi <= 50:
     print("you're normal")
 if bmi > 50:
     print("you're overweight")
+if bmi > 50 or bmi < 14.5:
+    print("you're unhealthy")
+
