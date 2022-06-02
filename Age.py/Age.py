@@ -12,9 +12,8 @@ if(age < 50):
 if(age > 50):
     print("you are old")
 
-if(age is 50):
-    print("you are young")
-
+if(age == 50):
+    print("you are blah")
 
 
 
