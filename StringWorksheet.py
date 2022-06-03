@@ -1,3 +1,5 @@
+# Sydney Chien
+
 # 1A
 from cgi import print_arguments
 from pickletools import string4
@@ -6,22 +8,22 @@ from pickletools import string4
 str1 = "James"
 print(str1)
 
-first = 0
-middle = (int(len(str1)/2))
-last = len(str1) - 1
+first = 0 # Position of first letter
+middle = (int(len(str1)/2)) # Position of middle letter
+last = len(str1) - 1 # Position of last letter
 
-output = str1[first] + str1[middle] + str1[last]
+output = str1[first] + str1[middle] + str1[last] # Combine first, middle, last letter
 print(output)
 
 # 1B
 str2 = "JhonDipPeta"
 print(str2)
 
-firstA = (int(len(str2)/2)) - 1
-middleA = (int(len(str2)/2))
-lastA = (int(len(str2)/2)) + 1
+firstA = (int(len(str2)/2)) - 1 # Position of letter before middle
+middleA = (int(len(str2)/2)) # Position of middle letter
+lastA = (int(len(str2)/2)) + 1 # Position of letter after middle
 
-output2 = str2[firstA] + str2[middleA] + str2[lastA]
+output2 = str2[firstA] + str2[middleA] + str2[lastA] # Combine 3 middle letters
 
 print(output2)
 
