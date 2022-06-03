@@ -83,6 +83,7 @@ if str8[7].islower():
 if str8[8].islower():
     print(str8[8])
 
+
 if str8[0].isupper():
     print(str8[0])
 if str8[1].isupper():
