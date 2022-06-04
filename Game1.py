@@ -38,12 +38,20 @@ print("HINT: The word is one of my FAVORITE COLORS") # Hint
 element = random.choice(colors)
 print(element," is the correct answer (for testing convenience)") # For testing
 
-guess = input("Input your guess:").lower()
+guess = input("Input your guess:").lower() # Make sure the guess is in lower case
 
-if guess == element:
+if guess == element: # If =
     print("Congratulations!")
-else:
+else: # If !=
     print("Sorry you missed.")
+
+again = input("Do you want to play again?:").lower()
+# Couldn't figure out how to replay the game 
+    
+
+      
+
+
 
 
 
