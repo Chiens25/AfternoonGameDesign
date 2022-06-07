@@ -23,7 +23,7 @@ for instructions in range(60): # Top border
     print("+", end = "")
 print()
 
-print("|                     GUESS THE COLOR                      |") # Title
+print("|                     GUESS THE Word                       |") # Title
 print("| The randomizer will choose a random color/animal/fruit.  |") # Instructions
 print("|         The object of the game is to guess that          |")
 print("|          color in the least amount of chances.           |")
@@ -60,6 +60,7 @@ if choice == "1":
         if again == "no":
             Game = False
             print("Thanks for playing!")
+        
 
 if choice == "2":
      while Game == True:
