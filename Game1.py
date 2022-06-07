@@ -60,7 +60,7 @@ if choice == "1":
         if again == "no":
             Game = False
             print("Thanks for playing!")
-        
+       
 
 if choice == "2":
      while Game == True:
