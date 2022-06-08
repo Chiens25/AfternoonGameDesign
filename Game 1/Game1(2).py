@@ -102,11 +102,11 @@ while Game:
 print("Your highscore is " + str(high))
 date = datetime.datetime.now()
 scrLine = str(high)+"\t "+ name + "\t"+date.strftime("%m-%d-%Y")+ "\n"
-myFile = open("G2.txt", 'a')
+myFile = open("G1.txt", 'a')
 myFile.write(scrLine)
 myFile.close()
 #REad the file
-myFile = open("G2.txt", 'r')
+myFile = open("G1.txt", 'r')
 stuff = myFile.readlines()
 myFile.close()
 stuff.sort(reverse = True)
