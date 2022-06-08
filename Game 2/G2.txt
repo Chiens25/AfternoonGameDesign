@@ -1,0 +1,13 @@
+for instructions in range(60): # Top border
+        print("+", end = "")
+    print()
+    print("|                     Instructions                       |") # Title
+    print("|    The randomizer will choose a random numer between   |") # 
+    print("|                  1-25 / 1-50 / 1-100.                  |")
+    print("|         The object of the game is to guess that        |")
+    print("|          number in the least amount of chances.        |")
+    print("|                        Good Luck!                      |")
+
+    for instructions2 in range(60): # Bottom border
+        print("+", end = "")
+    print()
