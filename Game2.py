@@ -8,12 +8,12 @@ os.system ('cls')
 from time import sleep
 seconds=.5
 
-theWord=""
+
 
 colors = ["blue", "pink", "red", "purple", "yellow", "orange"] # Color list
 animals = ["lion", "cheetah", "leopard", "puma", "tiger"] # Animal list
 fruits = ["apple", "strawberry", "raspberry", "cherry", "cranberry"] # Fruit list
-
+high = 0
 Game=True
 cnt=0
 #a function is a section  the prram that we call when we need it
@@ -86,34 +86,31 @@ while Game:
         cnt+=1   # cnt= cnt - 1
         if cnt ==5:
             print("Sorry!" )
-    score=200-40*cnt
+    score = 200-40*cnt
     if score > high:   # find highest sce
         high=score
     print(name+", your score is "+str(score))
     input("Press enter ")
     os.system('cls')
-    print("<><><><><><><><><><><><>")
     answer=input("Do yo want to play again? ")
+    os.system('cls')
     if ('n' or 'N') in answer:
         Game=False
         print("Thank you for playing my game" )
     
     cnt=0 
-    print("your highest score is " + str(high))
-    date = datetime.datetime.now()
-    scrLine=str(score)+"\t "+ name + "\t"+date.strftime("%m-%d-%Y")+ "\n"
-    myFile = open("G2.txt", 'w')
-    myFile.write(scrLine)
-    myFile.close()
-    #Append tyr file add lines tthe file
-    myFile = open("G2.txt", 'a')
-    myFile.write(scrLine)
-    myFile.close()
-    #REad the file
-    myFile = open("G2.txt", 'r')
-    stuff=myFile.readlines()
-    myFile.close()
-    for line in stuff:
-        print(line)
+print("Your highscore is " + str(high))
+date = datetime.datetime.now()
+scrLine = str(high)+"\t "+ name + "\t"+date.strftime("%m-%d-%Y")+ "\n"
+myFile = open("G2.txt", 'a')
+myFile.write(scrLine)
+myFile.close()
+#REad the file
+myFile = open("G2.txt", 'r')
+stuff = myFile.readlines()
+myFile.close()
+stuff.sort(reverse = True)
+for line in stuff:
+    print(line)
 
 
