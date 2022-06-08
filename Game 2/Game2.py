@@ -1,6 +1,8 @@
 # Sydney Chien
 # Number Guessing Game
 
+# *PROBLEM* - WORKS ON THE FIRST RUN AND THEN GOES STRAIGHT TO CHOICE 5
+
 import os, datetime 
 import random
 os.system('cls')
@@ -19,13 +21,13 @@ def scoreboard():
                 print("HINT: The number is EVEN")
         else: 
                 print("HINT: The number is ODD")
-    if count ==0 and choice == 3:
+    if count == 0 and choice == 3:
         remainder = number % 2
         if remainder == 0: 
                 print("HINT: The number is EVEN")
         else: 
                 print("HINT: The number is ODD")
-    if count ==0 and choice == 4:
+    if count == 0 and choice == 4:
         remainder = number % 2
         if remainder == 0: 
                 print("HINT: The number is EVEN")
@@ -54,7 +56,7 @@ name = input("What is your name?: ")
 high = 0 
 
 while Game:
-    for menu in range(60): # Top border
+    for menu in range(56): # Top border
         print("+", end = "")
     print()
     print("|                    NUMBER GAME                       |") # Title
@@ -65,16 +67,16 @@ while Game:
     print("|                 5. Print Score                       |")
     print("|                 6. Exit                              |")
 
-    for menu in range(60): # Bottom border
+    for menu in range(56): # Bottom border
         print("+", end = "")
     print()
-    choice = (input("Select option 1-6: "))
+    choice = int(input("Select option 1-6: "))
 
     number = randomNumber(choice) 
     os.system('cls')
     check = True
     while check and count <5:
-        guess = input("Plese put your guess here: ")
+        guess = int(input("Plese put your guess here: "))
         print()
         if guess == number:
             print("Congrats, You got it!")
@@ -83,12 +85,13 @@ while Game:
             scoreboard()
         count+=1   
         if count ==5:
-            print("Sorry!" )
+            print("Sorry! The number was", number )
     score = 200-40*count
     if score > high:   
         high=score
     print(name +", your score is "+str(score))
     input("Press enter: ")
+    os.system('cls')
 
 if choice == 1:
     myFile = open("G2.txt", 'r')
@@ -97,7 +100,7 @@ if choice == 1:
         print(line)
     myFile.close()
 
-if choice == 4:
+if choice == 5:
     myFile = open("G2score.txt", 'r')
     stuff = myFile.readlines()
     myFile.close()
@@ -105,7 +108,7 @@ if choice == 4:
     for line in stuff:
         print(line)
 
-if choice == 5:
+if choice == 6:
     print("Thanks for playing!")
 
 
