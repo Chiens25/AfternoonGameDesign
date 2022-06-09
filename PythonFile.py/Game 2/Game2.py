@@ -33,7 +33,7 @@ def hint(): # Define hint
                 print("HINT: The number is EVEN")
         else: 
                 print("HINT: The number is ODD")
-    elif count == 0 and count < 4: # For guesses 1-5 tells user if guess is too high/low 
+    elif count == 0 or count < 4: # For guesses 1-5 tells user if guess is too high/low 
         if guess > number:
             print("Too high!")
         if guess < number:
@@ -82,9 +82,9 @@ while Game:
             print("sorry")
     number = randomNumber(choice) # Set number to random number
     if choice == 1: # Print the instructions
-        myFile = open("G2.txt", 'r') 
-        content = myFile.readlines()
-        for line in content:
+        myFile = open("G2instruct.txt", 'r') 
+        stuff = myFile.readlines()
+        for line in stuff:
             print(line)
         myFile.close()
 
