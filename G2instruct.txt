@@ -1,0 +1,6 @@
+|                     Instructions                       |
+|    The randomizer will choose a random numer between   |
+|                  1-25 / 1-50 / 1-100.                  |
+|         The object of the game is to guess that        |
+|          number in the least amount of chances.        |
+|                        Good Luck!                      |
