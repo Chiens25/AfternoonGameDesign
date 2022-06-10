@@ -14,14 +14,10 @@ Game = True
 count = 0
 
 def instructions():
-    myFile = open("instructions.txt", 'w')
-    line1 = "|                     Instructions                       |" # Title
-    line2 = "|    The randomizer will choose a random numer between   |"
-    line3 = "|                  1-25 / 1-50 / 1-100.                  |"
-    line4 = "|         The object of the game is to guess that        |"
-    line5 = "|          number in the least amount of chances.        |"
-    line6 = "|                        Good Luck!                      |"  
-    myFile.write(line1 + "\n" + line2 + "\n" + line3 + "\n" + line4 + "\n" + line5 + "\n" + line6)
+    myFile = open("instructions.txt", 'r')
+    content = myFile.readlines()
+    for lines in content:
+        print(lines)
     myFile.close()
 
 
@@ -92,20 +88,25 @@ while Game:
                 print("give me 1-7")
         except:
             print("sorry")
-    number = randomNumber(choice) # Set number to random number
+    if choice > 1 or choice < 5:
+        number = randomNumber(choice) # Set number to random number
+        check = True
+
 
     if choice == 1: # Print the instructions
-        print("hi")
         instructions()
-        myFile = open("instructions.txt", 'r')
+        input("Press enter: ")
+        check = False
 
     if choice == 5: # Print the scoresheet
-        myFile = open("G2score.txt", 'r')
+        myFile = open("PythonFile.py\Game 2\G2score.txt", 'r')
         stuff = myFile.readlines()
         myFile.close()
         stuff.sort(reverse = True) # Puts largest digit on the top
         for line in stuff:
             print(line)
+        input("Press enter: ")
+        check = False
 
     if choice == 6:
         
@@ -118,7 +119,7 @@ while Game:
             myFile.close()
         break
         os.system('cls')
-    check = True
+    
     while check and count < 5:
         guess = int(input("Plese put your guess here: "))
         print()
@@ -130,12 +131,13 @@ while Game:
         count+=1   
         if count ==5:
             print("Sorry! The number was", number )
-    score = 800-40*count
-    if score > high:   
-        high=score
-    print(name +", your score is "+str(score))
-    input("Press enter: ")
-    os.system('cls')
+    if check or count ==5:
+        score = 800-40*count
+        if score > high:   
+            high=score
+        print(name +", your score is "+str(score))
+        input("Press enter: ")
+        os.system('cls')
 print(high)
 
 
