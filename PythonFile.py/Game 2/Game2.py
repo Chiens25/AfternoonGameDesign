@@ -13,6 +13,18 @@ number = 0
 Game = True
 count = 0
 
+def instructions():
+    myFile = open("instructions.txt", 'w')
+    line1 = "|                     Instructions                       |" # Title
+    line2 = "|    The randomizer will choose a random numer between   |"
+    line3 = "|                  1-25 / 1-50 / 1-100.                  |"
+    line4 = "|         The object of the game is to guess that        |"
+    line5 = "|          number in the least amount of chances.        |"
+    line6 = "|                        Good Luck!                      |"  
+    myFile.write(line1 + "\n" + line2 + "\n" + line3 + "\n" + line4 + "\n" + line5 + "\n" + line6)
+    myFile.close()
+
+
 def hint(): # Define hint
     global count     
     if count == 0 and choice == 2: # After first try on 1-25
@@ -70,7 +82,7 @@ while Game:
     for menu in range(56): # Bottom border
         print("+", end = "")
     print()
-    choice =input("Select option 1-6: ") # User input option choice
+    choice = input("Select option 1-6: ") # User input option choice
     while True:
         try: # Accounts for non 1-7 inputs
             choice=int(choice) # Make it an integer so you dont have to go through with "" plus it adds value
@@ -81,12 +93,11 @@ while Game:
         except:
             print("sorry")
     number = randomNumber(choice) # Set number to random number
+
     if choice == 1: # Print the instructions
-        myFile = open("G2instruct.txt", 'r') 
-        stuff = myFile.readlines()
-        for line in stuff:
-            print(line)
-        myFile.close()
+        print("hi")
+        instructions()
+        myFile = open("instructions.txt", 'r')
 
     if choice == 5: # Print the scoresheet
         myFile = open("G2score.txt", 'r')
@@ -108,7 +119,7 @@ while Game:
         break
         os.system('cls')
     check = True
-    while check and count <5:
+    while check and count < 5:
         guess = int(input("Plese put your guess here: "))
         print()
         if guess == number:
