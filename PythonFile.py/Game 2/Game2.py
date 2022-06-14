@@ -13,12 +13,12 @@ number = 0
 Game = True
 count = 0
 
-def instructions():
-    myFile = open("instructions.txt", 'r')
+def instructions(): # Create an Intructions file 
+    myFile = open("instructions.txt", 'r') # Use 'r' for reading the file
     content = myFile.readlines()
     for lines in content:
         print(lines)
-    myFile.close()
+    myFile.close() # Close file ALWAYS
 
 
 def hint(): # Define hint
@@ -108,19 +108,19 @@ while Game:
         input("Press enter: ")
         check = False
 
-    if choice == 6:
+    if choice == 6: # Exit the game
         
         print("Thanks for playing!", high)
         if high > 50:
             myFile = open("Game 2\G2score.txt", 'a')
             date=datetime.datetime.now()
             scrLine = str(high)+"\t "+ name + "\t"+ date.strftime("%m-%d-%Y")+ "\n"
-            myFile.write(scrLine)
-            myFile.close()
-        break
+            myFile.write(scrLine)     # Print the high score
+            myFile.close() 
+        break        # Break the loop to end the game
         os.system('cls')
     
-    while check and count < 5:
+    while check and count < 5:      # Statements for user to input guess
         guess = int(input("Plese put your guess here: "))
         print()
         if guess == number:
@@ -131,11 +131,11 @@ while Game:
         count+=1   
         if count ==5:
             print("Sorry! The number was", number )
-    if check or count ==5:
+    if check or count ==5:         # Calculate score based on counted tries
         score = 800-40*count
         if score > high:   
-            high=score
-        print(name +", your score is "+str(score))
+            high=score              # Find high score
+        print(name +", your score is "+str(score)) 
         input("Press enter: ")
         os.system('cls')
 print(high)
