@@ -113,7 +113,6 @@ def menu():
     screen.blit(textScore, (225, 610))
     screen.blit(textEx, (425, 610))
     pygame.display.update()
-    pygame.time.delay(100000)
 
     while True:
         for event in pygame.event.get():
