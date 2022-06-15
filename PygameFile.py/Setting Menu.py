@@ -2,6 +2,7 @@
 # 06/14/2022
 
 import pygame, os, time, random, math, datetime, sys
+from pygame import mixer
 pygame.init()
 
 
@@ -14,6 +15,7 @@ os.system('cls')
 
 # General Variables
 WIDTH = 700   # Amount of pixels
+w3 = WIDTH//3
 HEIGHT = 700
 colors = {"white":(255,255,255), "grey":(245,245,245), "black":(0,0,0), "red":(255,0,0), "green":(0,255,0), "blue":(0,0,255), "pink":(204,0,204), "orange":(255,128,0), "yellow":(255,255,0), "purple":(127,0,255)}
 clr = colors.get("white")
@@ -67,6 +69,8 @@ speed = 2
 run = True
 background = colors.get("grey")
 colorTheme = colors.get("white")
+mixer.music.load('PygameFile.py\journey.wav')
+mixer.music.play(-1)
 
 def settings():
     print("here")
@@ -78,14 +82,14 @@ def settings():
 
     # Color Settings
     ColorTheme = MENU_FONT.render("Background Color:", 1, colors.get("black"))
-    screen.blit(ColorTheme, (WIDTH//3, 70))
+    screen.blit(ColorTheme, (w3, 70))
     pygame.display.update()
     pygame.time.delay(50)
 
     # Color Backgrounds
-    Button_White = pygame.Rect(WIDTH//3, 100, 230, 50)
-    Button_Orange = pygame.Rect(WIDTH//3, 170, 230, 50)
-    Button_Purple = pygame.Rect(WIDTH//3, 240, 230, 50)
+    Button_White = pygame.Rect(w3, 100, 230, 50)
+    Button_Orange = pygame.Rect(w3, 170, 230, 50)
+    Button_Purple = pygame.Rect(w3, 240, 230, 50)
     pygame.draw.rect(screen, colors.get("grey"), Button_White)
     pygame.draw.rect(screen, colors.get("orange"), Button_Orange)
     pygame.draw.rect(screen, colors.get("purple"), Button_Purple)
@@ -94,9 +98,9 @@ def settings():
     textWhite = MENU_FONT.render("White", 1, colors.get("black"))
     textOrange = MENU_FONT.render("Orange", 1, colors.get("black"))
     textPurple = MENU_FONT.render("Purple", 1, colors.get("black"))
-    screen.blit(textWhite, (WIDTH//3, 110))
-    screen.blit(textOrange, (WIDTH//3, 180))
-    screen.blit(textPurple, (WIDTH//3, 250))
+    screen.blit(textWhite, (w3, 110))
+    screen.blit(textOrange, (w3, 180))
+    screen.blit(textPurple, (w3, 250))
     pygame.display.update()
     pygame.time.delay(50)
 
@@ -110,13 +114,13 @@ def settings():
 
     # Screen Size Settings
     ScreenSize = MENU_FONT.render("Screen Size:", 1, colors.get("black"))
-    screen.blit(ScreenSize, (WIDTH//3, 300))
+    screen.blit(ScreenSize, (w3, 300))
     pygame.display.update()
     pygame.time.delay(50)
 
-    Button_Size1 = pygame.Rect(WIDTH//3, 350, 230, 50)
-    Button_Size2 = pygame.Rect(WIDTH//3, 420, 230, 50)
-    Button_Size3 = pygame.Rect(WIDTH//3, 490, 230, 50)
+    Button_Size1 = pygame.Rect(w3, 350, 230, 50)
+    Button_Size2 = pygame.Rect(w3, 420, 230, 50)
+    Button_Size3 = pygame.Rect(w3, 490, 230, 50)
 
     pygame.draw.rect(screen, colors.get("grey"), Button_Size1)
     pygame.draw.rect(screen, colors.get("grey"), Button_Size2)
@@ -125,9 +129,9 @@ def settings():
     textSize1 = MENU_FONT.render("7 by 7", 1, colors.get("black"))
     textSize2= MENU_FONT.render("7 by 9", 1, colors.get("black"))
     textSize3 = MENU_FONT.render("7 by 5", 1, colors.get("black"))
-    screen.blit(textSize1, (WIDTH//3, 360))
-    screen.blit(textSize2, (WIDTH//3, 430))
-    screen.blit(textSize3, (WIDTH//3, 500))
+    screen.blit(textSize1, (w3, 360))
+    screen.blit(textSize2, (w3, 430))
+    screen.blit(textSize3, (w3, 500))
     pygame.display.update()
     pygame.time.delay(50)
 
@@ -145,8 +149,8 @@ def settings():
     pygame.draw.rect(screen, colors.get("grey"), Button_SoundN)
   
 
-    textSoundY = MENU_FONT.render("Sound", 1, colors.get("black"))
-    textSoundN= MENU_FONT.render("No Sound", 1, colors.get("black"))
+    textSoundY = MENU_FONT.render("On", 1, colors.get("black"))
+    textSoundN= MENU_FONT.render("Off", 1, colors.get("black"))
     screen.blit(textSoundY, (WIDTH * .3, 560))
     screen.blit(textSoundN, (WIDTH * .6, 560))
     pygame.display.update()
@@ -174,19 +178,17 @@ def settings():
                 if Button_Size1.collidepoint(mx, my):
                     WIDTH == 700
                     HEIGHT = 700
+                if Button_Size2.collidepoint(mx, my):
+                    WIDTH == 900
+                    HEIGHT = 700
+                if Button_Size3.collidepoint(mx, my):
+                    WIDTH == 500
+                    HEIGHT = 700
                 if Button_SoundY.collidepoint(mx, my):
-                    soundObj = pygame.mixer.Sound('PygameFile.py\Fluffing-a-Duck.mp3')
-                    soundObj.play()
-
+                    mixer.music.play(-1)
                 if Button_SoundN.collidepoint(mx, my):
-                    soundObj.stop()
+                    mixer.music.stop()
 
-
-
-    
-
-    
-    # Make WIDTH HEIGHT values generic (EX. WIDTH//2)
                     
 
 # Menu
