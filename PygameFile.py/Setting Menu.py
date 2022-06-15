@@ -57,7 +57,7 @@ my = 0
 ibox = rad*math.sqrt(2)
 xig = cx-(ibox/2)
 yig = cy-(ibox/2)
-insSquare=pygame.Rect(xig,yig,ibox,ibox)
+insSquare = pygame.Rect(xig,yig,ibox,ibox)
 
 #bounce
 mountainSquare = pygame.Rect(250, 320, 180, 250)
@@ -74,18 +74,18 @@ def settings():
     screen.fill(colorTheme)
     Title = TITLE_FONT.render("Settings", 1, colors.get("black"))
     xd = WIDTH//2 - (Title.get_width()//2)
-    screen.blit(Title, (xd, 50))
+    screen.blit(Title, (xd, 10))
 
     # Color Settings
     ColorTheme = MENU_FONT.render("Background Color:", 1, colors.get("black"))
-    screen.blit(ColorTheme, (WIDTH//3, 150))
+    screen.blit(ColorTheme, (WIDTH//3, 70))
     pygame.display.update()
     pygame.time.delay(50)
 
     # Color Backgrounds
-    Button_White = pygame.Rect(WIDTH//3, 200, 230, 50)
-    Button_Orange = pygame.Rect(WIDTH//3, 270, 230, 50)
-    Button_Purple = pygame.Rect(WIDTH//3, 340, 230, 50)
+    Button_White = pygame.Rect(WIDTH//3, 100, 230, 50)
+    Button_Orange = pygame.Rect(WIDTH//3, 170, 230, 50)
+    Button_Purple = pygame.Rect(WIDTH//3, 240, 230, 50)
     pygame.draw.rect(screen, colors.get("grey"), Button_White)
     pygame.draw.rect(screen, colors.get("orange"), Button_Orange)
     pygame.draw.rect(screen, colors.get("purple"), Button_Purple)
@@ -94,9 +94,9 @@ def settings():
     textWhite = MENU_FONT.render("White", 1, colors.get("black"))
     textOrange = MENU_FONT.render("Orange", 1, colors.get("black"))
     textPurple = MENU_FONT.render("Purple", 1, colors.get("black"))
-    screen.blit(textWhite, (WIDTH//3, 210))
-    screen.blit(textOrange, (WIDTH//3, 280))
-    screen.blit(textPurple, (WIDTH//3, 350))
+    screen.blit(textWhite, (WIDTH//3, 110))
+    screen.blit(textOrange, (WIDTH//3, 180))
+    screen.blit(textPurple, (WIDTH//3, 250))
     pygame.display.update()
     pygame.time.delay(50)
 
@@ -110,24 +110,45 @@ def settings():
 
     # Screen Size Settings
     ScreenSize = MENU_FONT.render("Screen Size:", 1, colors.get("black"))
-    screen.blit(ScreenSize, (WIDTH//3, 400))
+    screen.blit(ScreenSize, (WIDTH//3, 300))
     pygame.display.update()
     pygame.time.delay(50)
 
-    Button_Size1 = pygame.Rect(WIDTH//3, 450, 230, 50)
-    Button_Size2 = pygame.Rect(WIDTH//3, 520, 230, 50)
-    Button_Size3 = pygame.Rect(WIDTH//3, 590, 230, 50)
+    Button_Size1 = pygame.Rect(WIDTH//3, 350, 230, 50)
+    Button_Size2 = pygame.Rect(WIDTH//3, 420, 230, 50)
+    Button_Size3 = pygame.Rect(WIDTH//3, 490, 230, 50)
 
     pygame.draw.rect(screen, colors.get("grey"), Button_Size1)
     pygame.draw.rect(screen, colors.get("grey"), Button_Size2)
     pygame.draw.rect(screen, colors.get("grey"), Button_Size3)
 
-    textWhite = MENU_FONT.render("7 by 7", 1, colors.get("black"))
-    textWhite = MENU_FONT.render("7 by 9", 1, colors.get("black"))
-    textWhite = MENU_FONT.render("7 by 5", 1, colors.get("black"))
-    screen.blit(textWhite, (WIDTH//3, 460))
-    screen.blit(textWhite, (WIDTH//3, 530))
-    screen.blit(textWhite, (WIDTH//3, 600))
+    textSize1 = MENU_FONT.render("7 by 7", 1, colors.get("black"))
+    textSize2= MENU_FONT.render("7 by 9", 1, colors.get("black"))
+    textSize3 = MENU_FONT.render("7 by 5", 1, colors.get("black"))
+    screen.blit(textSize1, (WIDTH//3, 360))
+    screen.blit(textSize2, (WIDTH//3, 430))
+    screen.blit(textSize3, (WIDTH//3, 500))
+    pygame.display.update()
+    pygame.time.delay(50)
+
+ # Sound Settings
+    Sound = MENU_FONT.render("Sound?:", 1, colors.get("black"))
+    screen.blit(Sound, (WIDTH//8, 600))
+    pygame.display.update()
+    pygame.time.delay(50)
+
+    Button_SoundY = pygame.Rect(WIDTH * .3, 550, 120, 120)
+    Button_SoundN = pygame.Rect(WIDTH * .6, 550, 120, 120)
+    
+
+    pygame.draw.rect(screen, colors.get("grey"), Button_SoundY)
+    pygame.draw.rect(screen, colors.get("grey"), Button_SoundN)
+  
+
+    textSoundY = MENU_FONT.render("Sound", 1, colors.get("black"))
+    textSoundN= MENU_FONT.render("No Sound", 1, colors.get("black"))
+    screen.blit(textSoundY, (WIDTH * .3, 560))
+    screen.blit(textSoundN, (WIDTH * .6, 560))
     pygame.display.update()
     pygame.time.delay(50)
 
@@ -153,12 +174,13 @@ def settings():
                 if Button_Size1.collidepoint(mx, my):
                     WIDTH == 700
                     HEIGHT = 700
-                if Button_Size2.collidepoint(mx, my):
-                    WIDTH == 900
-                    HEIGHT = 700
-                if Button_Size3.collidepoint(mx, my):
-                    WIDTH == 500
-                    HEIGHT = 700
+                if Button_SoundY.collidepoint(mx, my):
+                    soundObj = pygame.mixer.Sound('PygameFile.py\Fluffing-a-Duck.mp3')
+                    soundObj.play()
+
+                if Button_SoundN.collidepoint(mx, my):
+                    soundObj.stop()
+
 
 
     
@@ -222,7 +244,7 @@ def menu():
                 if Button_Game2.collidepoint(mx, my):
                     game2()
                 if Button_Score.collidepoint(mx, my):
-                    instruction()
+                    scoreboard()
                 if Button_Ex.collidepoint(mx, my):
                     exit()
 
@@ -275,7 +297,8 @@ def instruction():
 
 # Game 2
 def game2():
-    # Background
+    print("I am here")
+    # screen.fill(background)
     pygame.draw.rect(screen, colors.get("white"), mountainSquare)
     screen.blit(bg, (0,0))
     for event in pygame.event.get():
@@ -286,6 +309,8 @@ def game2():
             mousePos = pygame.mouse.get_pos()
             # print(mousePos)
     keys = pygame.key.get_pressed() #allow us to see what key was pressed
+
+    
 
     #square movement
     if keys[pygame.K_d] and square.x < WIDTH-wb:
@@ -431,21 +456,28 @@ pygame.draw.rect(screen, colors.get("blue"), insSquare)
 pygame.draw.circle(screen, colors.get("red"), (cx, cy), rad)
 pygame.display.update()
 pygame.time.delay(5)
-                        
+
+def scoreboard():
+    print("scoreboard")
 
 def exit():
-    print("you quit")
-
+    print("here")
     screen.fill(colorTheme)
-    Title = TITLE_FONT.render("Bye Bye", 1, colors.get("black")) # Create a title
+    Title = TITLE_FONT.render("Bye Bye", 1, colors.get("black"))
     xd = WIDTH//2 - (Title.get_width()//2)
-    screen.blit(Title, (xd, 50))
+    screen.blit(Title, (xd, 250))
+    pygame.display.update()
+    pygame.time.delay(1000)
 
     if high > 50:
-            myFile = open("Game 2\G2score.txt", 'a')
+            myFile = open("PygameFile\MenuScore.txt", 'a')
             date=datetime.datetime.now()
             scrLine = str(high) + "\t"+ date.strftime("%m-%d-%Y")+ "\n"
             myFile.write(scrLine)
             myFile.close()    
 
+    pygame.quit()
+    sys.quit()
+    print("you quit")
+        
 menu()
