@@ -446,6 +446,12 @@ def game1():
         input("Press enter: ")
         os.system('cls')
         print(high)
+    if high > 50:
+            myFile = open("Game 2\SMscore.txt", 'a')
+            date=datetime.datetime.now()
+            scrLine = str(high)+"\t " + "\t"+ date.strftime("%m-%d-%Y")+ "\n"
+            myFile.write(scrLine)     # Print the high score
+            myFile.close() 
 
 
 
@@ -460,7 +466,26 @@ pygame.display.update()
 pygame.time.delay(5)
 
 def scoreboard():
-    print("scoreboard")
+     #title font
+    screen.fill(colorTheme)
+    Title = TITLE_FONT.render("Scoreboard", 1, colors.get("black"))
+    xd = WIDTH//2 - (Title.get_width()//2)
+    screen.blit(Title, (xd, 50))\
+
+    #Instructions File
+    myFile = open("PygameFile.py\\instructions.txt", "r")
+    content = myFile.readlines()
+
+    #print instructions
+    li = 150
+    for line in content:
+        Scores = MENU_FONT.render(line[0:-1], 1, colors.get('black'))
+        screen.blit(Scores, (40, li))
+        pygame.display.update()
+        pygame.time.delay(50)
+        li += 40
+    
+
 
 def exit():
     print("here")

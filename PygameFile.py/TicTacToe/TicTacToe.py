@@ -633,51 +633,165 @@ def draw_Markers():
         yValue=0
         for y in x:  #each elem fthe rw
             if y ==1:
-                print ("x")
                 pygame.draw.line(screen,xClr,(xValue * WIDTH//3 + 15, yValue * HEIGHT//3 + 15), (xValue * WIDTH//3 + WIDTH//3-15, yValue * WIDTH//3 + WIDTH//3-15),lineWidth)
                 pygame.draw.line(screen, xClr,(xValue*WIDTH//3 +WIDTH//3-15, yValue*HEIGHT//3+15),(xValue *WIDTH//3+15,yValue*HEIGHT//3+HEIGHT//3-15),lineWidth)
             if y==-1:
-                print("O")
                 pygame.draw.circle(screen,cirClr,(xValue*WIDTH//3+WIDTH//6,yValue*HEIGHT//3 +HEIGHT//6),WIDTH//6-15, lineWidth)
             yValue +=1
         xValue +=1
     pygame.display.update() \
-        
+
+def Xwinnerult():
+    screen.fill("YELLOW")
+    Title = TITLE_FONT.render(("PLAYER 1 IS THE CHAMPION"), 1, colors.get("white"))
+    xd = WIDTH//2 - (Title.get_width()//2)
+    screen.blit(Title, (xd, 50))\
+    
+    pygame.time.delay(1000)
+    pygame.display.update()
+
+def Owinnerult():
+    screen.fill("YELLOW")
+    Title = TITLE_FONT.render(("PLAYER 2 IS THE CHAMPION"), 1, colors.get("white"))
+    xd = WIDTH//2 - (Title.get_width()//2)
+    screen.blit(Title, (xd, 50))\
+    
+    pygame.time.delay(1000)
+    pygame.display.update()
+
+def Xwinner():
+    print("PLAYER 1 WINS")
+    screen.fill("red")
+    Title = TITLE_FONT.render(("PLAYER 1 WINS"), 1, colors.get("white"))
+    xd = WIDTH//2 - (Title.get_width()//2)
+    screen.blit(Title, (xd, 50))\
+    
+    pygame.time.delay(3000)
+    pygame.display.update()
+
+    if Xcount == 3:
+        Xwinnerult()
+        Xcount = 0
+        Ocount = 0
+
+    else:
+        print("How do I erase the board?")
+        gameEnd()
+
+def Owinner():
+    print("PLAYER 2 WINS")
+    screen.fill("red")
+    Title = TITLE_FONT.render(("PLAYER 2 WINS"), 1, colors.get("white"))
+    xd = WIDTH//2 - (Title.get_width()//2)
+    screen.blit(Title, (xd, 50))\
+
+    pygame.time.delay(3000)
+    pygame.display.update()
+
+    if Ocount == 3:
+        Owinnerult()
+        Xcount = 0
+        Ocount = 0
+    else:
+        print("How do I erase the board?")
+        gameEnd()
+
+Xcount=0
+Ocount=0
+
 def checkWinner():
+    global Xcount, Ocount
     if markers [0][0] + markers [0][1] + markers [0][2] == 3:
-        print ("x won!")
+        os.system('cls')
+        Xcount +=1
+        Xwinner()
     if markers [1][0] + markers [1][1] + markers [1][2] == 3:
-         print ("x won!")
+        os.system('cls') 
+        Xcount +=1 
+        Xwinner()
+         
     if markers [2][0] + markers [2][1] + markers [2][2] == 3:
-         print ("x won!")
+         os.system('cls')
+         Xcount +=1
+         Xwinner()
+         
     if markers [0][0] + markers [1][0] + markers [2][0] == 3:
-         print ("x won!")
+         os.system('cls')
+         Xcount +=1
+         Xwinner()
+         
     if markers [0][1] + markers [1][1] + markers [2][1] == 3:
-         print ("x won!")
+         os.system('cls')
+         Xcount +=1
+         Xwinner()
+         
     if markers [0][2] + markers [1][2] + markers [2][2] == 3:
-         print ("x won!")
+         os.system('cls')
+         Xcount +=1
+         Xwinner()
+         
     if markers [0][0] + markers [1][1] + markers [2][2] == 3:
-         print ("x won!")
+         os.system('cls')
+         Xcount +=1
+         Xwinner()
+         
     if markers [2][0] + markers [1][1] + markers [0][2] == 3:
-         print ("x won!")
+         os.system('cls')
+         Ocount +=1
+         Owinner()
+         
     if markers [0][0] + markers [0][1] + markers [0][2] == -3:
-        print ("o won!")
+        os.system('cls')
+        Ocount +=1
+        Owinner()
+        
     if markers [1][0] + markers [1][1] + markers [1][2] == -3:
-         print ("o won!")
+         os.system('cls')
+         Ocount +=1
+         Owinner()
+         
     if markers [2][0] + markers [2][1] + markers [2][2] == -3:
-         print ("o won!")
+         os.system('cls')
+         Ocount +=1
+         Owinner()
+         
     if markers [0][0] + markers [1][0] + markers [2][0] == -3:
-         print ("o won!")
+         os.system('cls')
+         Ocount +=1
+         Owinner()
+         
     if markers [0][1] + markers [1][1] + markers [2][1] == -3:
-         print ("o won!")
+         os.system('cls')
+         Ocount +=1
+         Owinner()
+         
     if markers [0][2] + markers [1][2] + markers [2][2] == -3:
-         print ("o won!")
+         os.system('cls')
+         Ocount +=1
+         Owinner()
+         
     if markers [0][0] + markers [1][1] + markers [2][2] == -3:
-         print ("o won!")
+         os.system('cls')
+         Ocount +=1
+         Owinner()
+         
     if markers [2][0] + markers [1][1] + markers [0][2] == -3:
-         print ("o won!")
+        os.system('cls')
+        Ocount +=1
+        Owinner()
+    
+    # CAT GAME??????????????????????????
+
+
+    
+  
+
+
 def gameEnd():
-    print()
+    zero_Array()
+    draw_Markers()
+    # HOW DO I GET THE GAME TO RESTART????????????????????????????????????????????
+
 zero_Array()
 while Game:
     screen.fill(backgrnd)
@@ -698,6 +812,7 @@ while Game:
                 markers[cellx][celly]=player
                 player *=-1
                 checkWinner()
+                
             
             
             
