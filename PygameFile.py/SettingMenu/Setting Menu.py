@@ -73,7 +73,7 @@ mixer.music.load('PygameFile.py\journey.wav')
 mixer.music.play(-1)
 
 def settings():
-    print("here")
+    global screen
     global colorTheme, mx, my
     screen.fill(colorTheme)
     Title = TITLE_FONT.render("Settings", 1, colors.get("black"))
@@ -178,16 +178,23 @@ def settings():
                 if Button_Size1.collidepoint(mx, my):
                     WIDTH == 700
                     HEIGHT = 700
+                    screen = pygame.display.set_mode((WIDTH, HEIGHT))
                 if Button_Size2.collidepoint(mx, my):
+                    print("here")
                     WIDTH == 900
                     HEIGHT = 700
+                    screen = pygame.display.set_mode((WIDTH, HEIGHT))
                 if Button_Size3.collidepoint(mx, my):
                     WIDTH == 500
                     HEIGHT = 700
+                    screen = pygame.display.set_mode((WIDTH, HEIGHT))
                 if Button_SoundY.collidepoint(mx, my):
                     mixer.music.play(-1)
                 if Button_SoundN.collidepoint(mx, my):
                     mixer.music.stop()
+
+                pygame.display.update()
+                settings()
 
                     
 
@@ -231,8 +238,7 @@ def menu():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-                sys.quit()
-                print("you quit")
+                sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mousePos = pygame.mouse.get_pos()
                 mx = mousePos[0]
