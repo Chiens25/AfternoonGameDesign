@@ -647,24 +647,46 @@ def draw_Markers():
 
 def Xwinnerult():
     screen.fill("YELLOW")
-    Title = TITLE_FONT.render(("PLAYER 1 IS THE CHAMPION"), 1, colors.get("white"))
+    Title = TITLE_FONT.render(("X IS THE CHAMPION"), 1, colors.get("white"))
     xd = WIDTH//2 - (Title.get_width()//2)
-    screen.blit(Title, (xd, 50))\
+    screen.blit(Title, (xd, 300))\
     
-    pygame.time.delay(1000)
     pygame.display.update()
+    pygame.time.delay(500)
+
+    pygame.quit()
+    sys.exit()
+    print("you quit")
+    # UPDATE FILE
+
 
 def Owinnerult():
     screen.fill("YELLOW")
-    Title = TITLE_FONT.render(("PLAYER 2 IS THE CHAMPION"), 1, colors.get("white"))
+    Title = TITLE_FONT.render(("O IS THE CHAMPION"), 1, colors.get("white"))
     xd = WIDTH//2 - (Title.get_width()//2)
-    screen.blit(Title, (xd, 50))\
+    screen.blit(Title, (xd, 300))\
     
-    pygame.time.delay(1000)
     pygame.display.update()
+    pygame.time.delay(500)
+
+    pygame.quit()
+    sys.exit()
+    print("you quit")
+    # UPDATE FILE
                     
 
-        
+def tieult():
+    screen.fill("YELLOW")
+    Title = TITLE_FONT.render(("IT'S A TIE"), 1, colors.get("white"))
+    xd = WIDTH//2 - (Title.get_width()//2)
+    screen.blit(Title, (xd, 300))\
+    
+    pygame.time.delay(500)
+    pygame.display.update()
+
+    pygame.quit()
+    sys.quit()
+    print("you quit")
 
 Xcount=0
 Ocount=0
@@ -672,44 +694,44 @@ Ocount=0
 def checkWinner():
     global Xcount, Ocount, gameOver, winner
     X_POS = 0
-    for ROW in markers: # CHECK COLUMNS
-        if sum(ROW) == 3:
+    for row in markers: # CHECK COLUMNS
+        if sum(row) == 3:
             winner = 1
             gameOver = True
-            gameEnd()
-    for ROW in markers: # CHECK COLUMNS
-        if sum(ROW) == -3:
+            
+    for row in markers: # CHECK COLUMNS
+        if sum(row) == -3:
             winner = -1
             gameOver = True
-            gameEnd()
+            
     # CHECK DIAGONALS
-    if markers [0][X_POS] + markers [1][X_POS] + markers [2][X_POS] == 3:# Check ROWS 
+    if markers [0][X_POS] + markers [1][X_POS] + markers [2][X_POS] == 3:# Check COLUMNS 
         winner = 1
         gameOver = True
-        gameEnd()
+        
     if markers [0][X_POS] + markers [1][X_POS] + markers [2][X_POS] == -3:  
         winner = -1
         gameOver = True
-        gameEnd()
+        
 
     if markers [0][0] + markers [1][1] + markers [2][2] == 3:
-         winner = -1
+         winner = 1
          gameOver = True
-         gameEnd()
+         
          
     if markers [2][0] + markers [1][1] + markers [0][2] == 3: 
-         winner = -1
+         winner = 1
          gameOver = True
-         gameEnd()
+         
 
     if markers [0][0] + markers [1][1] + markers [2][2] == -3: 
          winner = -1
          gameOver = True
-         gameEnd()
+         
     if markers [2][0] + markers [1][1] + markers [0][2] == -3:
         winner = -1
         gameOver = True
-        gameEnd()
+        
     # Check for CAT GAME
     if gameOver == False: # BOOLEAN = Not gameOver
         tie = True
@@ -720,9 +742,8 @@ def checkWinner():
         if tie: 
             gameOver = True
             winner = 0
-            gameEnd()
+            
 
-  
 
 
 def gameEnd():
@@ -732,43 +753,35 @@ def gameEnd():
 
     if winner == 1:
         Xcount+=1
-        Xwin = GIANT_FONT.render("X WINS", 1, "white")
-        screen.fill("red")
-        screen.blit(Xwin, (WIDTH//4, 50))\
-
-        pygame.time.delay(1000)
-        pygame.display.update()
+        text = GIANT_FONT.render("X WINS", 1, "white")
+       
+       
 
     if winner == -1:
         Ocount+=1
-        Owin = GIANT_FONT.render("O WINS", 1, "white")
-        screen.fill("red")
-        screen.blit(Owin, (WIDTH//4, 50))\
-
-        pygame.time.delay(1000)
-        pygame.display.update()
+        text = GIANT_FONT.render("O WINS", 1, "white")
+      
+        
     
     if winner == 0:
-        Tie = GIANT_FONT.render("XO TIE GAME", 1, "white")
-        screen.fill("red")
-        screen.blit(Tie, (WIDTH//4, 50))\
+        text = GIANT_FONT.render("XO TIE", 1, "white")
+        
+    screen.fill("red")
+    screen.blit(text, (WIDTH//4, 50))\
 
-        pygame.time.delay(1000)
-        pygame.display.update()
-
-    if Xcount == 3:
-        Xcount = 0
-        Ocount = 0
-        Xwinnerult()
-    if Ocount == -3:
-        Xcount = 0
-        Ocount = 0
-        Owinnerult()
  
     PlayAgain = MENU_FONT.render("Play Again?:", 1, colors.get("white"))
     screen.blit(PlayAgain, (WIDTH//8, 300))
-    pygame.display.update()
-    pygame.time.delay(50)
+    
+
+    XScoretext = MENU_FONT.render(("X's Wins:"+ str(Xcount)), 1, colors.get("white"))
+    screen.blit(XScoretext, (WIDTH//3, 200))
+   
+
+    OScoretext = MENU_FONT.render(("O's Wins:"+ str(Ocount)), 1, colors.get("white"))
+    screen.blit(OScoretext, (WIDTH//3*2, 200))
+   
+
     #creating buttons
     Button_1 = pygame.Rect(200, 400, 100, 50)
     Button_2 = pygame.Rect(400, 400, 100, 50)
@@ -781,8 +794,8 @@ def gameEnd():
     screen.blit(text1, (225, 410))
     screen.blit(text2, (425, 410))
     pygame.display.update()
-
-    while True:
+    run = True
+    while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -796,11 +809,16 @@ def gameEnd():
                     markers.clear()
                     markers = []
                     zero_Array()
-
+                    run = False
                 if Button_2.collidepoint(mx, my):
+                    if Xcount > Ocount:
+                        Xwinnerult()
+                    if Ocount > Xcount:
+                        Owinnerult()
                     pygame.quit()
                     sys.quit()
                     print("you quit")
+                    # Add X/O score date
 
 zero_Array()
 print()
@@ -824,6 +842,12 @@ while Game:
                 markers[cellx][celly]=player
                 player *=-1
                 checkWinner()
+                if gameOver:
+                    print("Game Over")
+                    gameOver = False
+                    gameEnd()
+                    print("Game Over")
+
                 
 
                 
