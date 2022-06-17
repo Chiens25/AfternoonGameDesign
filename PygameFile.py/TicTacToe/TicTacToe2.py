@@ -796,16 +796,15 @@ def gameEnd():
                     markers.clear()
                     markers = []
                     zero_Array()
-                    
+
                 if Button_2.collidepoint(mx, my):
                     pygame.quit()
                     sys.quit()
                     print("you quit")
 
-
-
-print()
 zero_Array()
+print()
+
 while Game:
     screen.fill(backgrnd)
     draw_grid()
