@@ -606,27 +606,31 @@ pygame.display.set_caption("Tic Tac Toe")  #change the title of my window
 backgrnd=colors.get("pink")
 
 #game Variable
-player=1
-markers=[]
-lineWidth=10
-Game=True
-MxMy=(0,0)
+player=1 # CONTROL player 1 is X and -1 is O
+markers=[] # Array to control the plays
+lineWidth=10 # Line thinkness
+Game=True # Control Main Game
+MxMy=(0,0) # Checks Click
+gameOver=False # Check if game is over
+winner = 0 # Who WON the game 1, -1, 0 (TIE)
+
 print(markers)  
-cirClr=colors.get("blue")
-xClr=colors.get("BLACK")
+cirClr=colors.get("blue") # Color for the Circle
+xClr=colors.get("BLACK") # Color for the X
+# Function to set our Array to 0
 def zero_Array(): 
     for x in range(3):
         row= [0] *3
         markers.append(row)
 
-
+# Function to draw the Grid lines
 def draw_grid():
     lineClr=colors.get("white")
     for x in range(1,3):
         pygame.draw.line(screen,lineClr,(0,HEIGHT//3*x),(WIDTH,HEIGHT//3*x),lineWidth)  #Hztal line
         pygame.draw.line(screen,lineClr,(WIDTH//3*x, 0),(WIDTH//3*x,HEIGHT),lineWidth)  #Vert line
     pygame.time.delay(100)
-
+# Function to draw X and O markers
 def draw_Markers():
     xValue=0
     for x in markers:   # getting a rw
@@ -650,6 +654,11 @@ def Xwinnerult():
     pygame.time.delay(1000)
     pygame.display.update()
 
+    for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
 def Owinnerult():
     screen.fill("YELLOW")
     Title = TITLE_FONT.render(("PLAYER 2 IS THE CHAMPION"), 1, colors.get("white"))
@@ -659,7 +668,13 @@ def Owinnerult():
     pygame.time.delay(1000)
     pygame.display.update()
 
+    for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
 def Xwinner():
+    global Xcount, Ocount
     print("PLAYER 1 WINS")
     screen.fill("red")
     Title = TITLE_FONT.render(("PLAYER 1 WINS"), 1, colors.get("white"))
@@ -679,6 +694,7 @@ def Xwinner():
         gameEnd()
 
 def Owinner():
+    global Xcount, Ocount
     print("PLAYER 2 WINS")
     screen.fill("red")
     Title = TITLE_FONT.render(("PLAYER 2 WINS"), 1, colors.get("white"))
