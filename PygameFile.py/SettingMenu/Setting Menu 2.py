@@ -200,6 +200,7 @@ def settings():
 
 # User Name
 def user():
+    global userName
     background = (255,255,255)
     screen.fill(background)
     pygame.display.update()
@@ -412,7 +413,7 @@ def game2():
         screen.blit(Title, (xd, 300))\
         
         pygame.display.update()
-        pygame.time.delay(500)
+        pygame.time.delay(1000)
 
         pygame.quit()
         sys.exit()
@@ -427,7 +428,7 @@ def game2():
         screen.blit(Title, (xd, 300))\
         
         pygame.display.update()
-        pygame.time.delay(500)
+        pygame.time.delay(1000)
 
         pygame.quit()
         sys.exit()
@@ -441,8 +442,8 @@ def game2():
         xd = WIDTH//2 - (Title.get_width()//2)
         screen.blit(Title, (xd, 300))\
         
-        pygame.time.delay(500)
         pygame.display.update()
+        pygame.time.delay(1000)
 
         pygame.quit()
         sys.quit()
@@ -454,6 +455,8 @@ def game2():
     def checkWinner():
         global Xcount, Ocount, gameOver, winner
         X_POS = 0
+        A_POS = 1
+        B_POS = 2
         for row in markers: # CHECK COLUMNS
             if sum(row) == 3:
                 winner = 1
@@ -464,33 +467,50 @@ def game2():
                 winner = -1
                 gameOver = True
                 
+        # CHECK ROWS
+            if markers [0][X_POS] + markers [1][X_POS] + markers [2][X_POS] == 3:# Check ROWS 
+                winner = 1
+                gameOver = True
+                
+            if markers [0][X_POS] + markers [1][X_POS] + markers [2][X_POS] == -3:  
+                winner = -1
+                gameOver = True
+            
+            if markers [0][A_POS] + markers [1][A_POS] + markers [2][A_POS] == 3:# Check ROWS 
+                winner = 1
+                gameOver = True
+                
+            if markers [0][A_POS] + markers [1][A_POS] + markers [2][A_POS] == -3:  
+                winner = -1
+                gameOver = True
+            
+            if markers [0][B_POS] + markers [1][B_POS] + markers [2][B_POS] == 3:# Check ROWS 
+                winner = 1
+                gameOver = True
+                
+            if markers [0][B_POS] + markers [1][B_POS] + markers [2][B_POS] == -3:  
+                winner = -1
+                gameOver = True
+                
         # CHECK DIAGONALS
-        if markers [0][X_POS] + markers [1][X_POS] + markers [2][X_POS] == 3:# Check COLUMNS 
-            winner = 1
-            gameOver = True
-            
-        if markers [0][X_POS] + markers [1][X_POS] + markers [2][X_POS] == -3:  
-            winner = -1
-            gameOver = True
-            
+            if markers [0][0] + markers [1][1] + markers [2][2] == 3:
+                winner = 1
+                gameOver = True
+                
+                
+            if markers [2][0] + markers [1][1] + markers [0][2] == 3: 
+                winner = 1
+                gameOver = True
+                
 
-        if markers [0][0] + markers [1][1] + markers [2][2] == 3:
-            winner = 1
-            gameOver = True
-            
-            
-        if markers [2][0] + markers [1][1] + markers [0][2] == 3: 
-            winner = 1
-            gameOver = True
-            
-
-        if markers [0][0] + markers [1][1] + markers [2][2] == -3: 
-            winner = -1
-            gameOver = True
-            
-        if markers [2][0] + markers [1][1] + markers [0][2] == -3:
-            winner = -1
-            gameOver = True
+            if markers [0][0] + markers [1][1] + markers [2][2] == -3: 
+                winner = -1
+                gameOver = True
+                
+            if markers [2][0] + markers [1][1] + markers [0][2] == -3:
+                winner = -1
+                gameOver = True
+        
             
         # Check for CAT GAME
         if gameOver == False: # BOOLEAN = Not gameOver
@@ -575,6 +595,8 @@ def game2():
                             Xwinnerult()
                         if Ocount > Xcount:
                             Owinnerult()
+                        if Ocount == Xcount:
+                            tieult()
                         pygame.quit()
                         sys.quit()
                         print("you quit")
@@ -614,7 +636,7 @@ def game2():
 
 # Game 1
 def game1():
-    global insSquare, rad, yb, xb
+    global insSquare, rad, yb, xb, userName
     score = 0
 
     screen.fill(colors.get('white'))
@@ -627,8 +649,14 @@ def game1():
         # screen.fill(backgrnd)
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
+                myFile = open("PygameFile.py\SettingMenu\SMscore.txt", 'a')
+                date=datetime.datetime.now()
+                scrLine = str(score)+"\t\t\t "+ userName + "\t\t\t"+ date.strftime("%m-%d-%Y")+ "\n"
+                myFile.write(scrLine)     # Print the high score
+                myFile.close() 
+                print(scrLine)
                 menu()
-                
+
         keys= pygame.key.get_pressed() #this is a list
         #mve square
         if keys[pygame.K_RIGHT] and square.x < WIDTH -(wb):
@@ -684,18 +712,22 @@ def scoreboard():
     xd = WIDTH//2 - (Title.get_width()//2)
     screen.blit(Title, (xd, 50))\
 
-    #Instructions File
-    myFile = open("PygameFile.py\\instructions.txt", "r")
+    # Open Scoreboard File
+    myFile = open("PygameFile.py\SettingMenu\SMscore.txt", "r")
     content = myFile.readlines()
 
-    #print instructions
-    li = 150
+
+    # Print instructions
+    li = 150 
     for line in content:
-        Scores = MENU_FONT.render(line[0:-1], 1, colors.get('black'))
+        Scores = MENU_FONT.render(line[0:-1], 1, colors.get('black')) 
         screen.blit(Scores, (40, li))
         pygame.display.update()
-        pygame.time.delay(50)
-        li += 40
+        pygame.time.delay(1000)
+        li += 40 # Add 40 pixels between each printed line
+
+    myFile.close()
+    
 
 
 

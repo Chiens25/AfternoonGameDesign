@@ -110,22 +110,21 @@ while Game:
 
     if choice == 6: # Exit the game
         
-        print("Thanks for playing!", high)
+        print("Thanks for playing! Your high score is ", high)
         if high > 50:
-            myFile = open("Game 2\G2score.txt", 'a')
+            myFile = open("PythonFile.py\Game 2\G2score.txt", 'a')
             date=datetime.datetime.now()
             scrLine = str(high)+"\t "+ name + "\t"+ date.strftime("%m-%d-%Y")+ "\n"
             myFile.write(scrLine)     # Print the high score
             myFile.close() 
         break        # Break the loop to end the game
-        os.system('cls')
     
     while check and count < 5:      # Statements for user to input guess
         guess = int(input("Plese put your guess here: "))
         print()
         if guess == number:
             print("Congrats, You got it!")
-            check=False
+            check = False
         else:
             hint()
         count+=1   
@@ -136,6 +135,11 @@ while Game:
         if score > high:   
             high=score              # Find high score
         print(name +", your score is "+str(score)) 
+        myFile = open("PythonFile.py\Game 2\G2score.txt", 'a')
+        date=datetime.datetime.now()
+        scrLine = str(high)+"\t "+ name + "\t"+ date.strftime("%m-%d-%Y")+ "\n"
+        myFile.write(scrLine)     # Print the high score
+        myFile.close() 
         input("Press enter: ")
         os.system('cls')
 print(high)
