@@ -305,171 +305,189 @@ def instruction():
 
 # Game 2
 def game2():
-    print("I am here")
-    # screen.fill(background)
-    pygame.draw.rect(screen, colors.get("white"), mountainSquare)
-    screen.blit(bg, (0,0))
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            run = False
-            print("you quit")
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            mousePos = pygame.mouse.get_pos()
-            # print(mousePos)
-    keys = pygame.key.get_pressed() #allow us to see what key was pressed
-
-    
-
-    #square movement
-    if keys[pygame.K_d] and square.x < WIDTH-wb:
-        square.x += speed
-        charx += speed
-    if keys[pygame.K_a] and square.x > 0:
-        square.x -= speed
-        charx -= speed
-    if keys[pygame.K_s] and square.y < HEIGHT-hb:
-        square.y += speed
-        chary += speed
-    if keys[pygame.K_w] and square.y > 0:
-        square.y -= speed
-        chary -= speed
-
-    #circle and inscribed square movement
-    if keys[pygame.K_RIGHT] and cx < WIDTH-rad:
-        cx += speed
-        insSquare.x += speed
-    if keys[pygame.K_LEFT] and cx > 0+rad:
-        cx -= speed
-        insSquare.x -= speed
-    if keys[pygame.K_DOWN] and cy < HEIGHT-rad:
-        cy += speed
-        insSquare.y += speed
-    if keys[pygame.K_UP] and cy > 0+rad:
-        cy -= speed
-        insSquare.y -= speed
-    
-    #circle square collide
-    if square.colliderect(insSquare): 
-        print("BOOM")
-        cx = random.randint(rad, WIDTH-rad)
-        cy = random.randint(rad, HEIGHT-rad)
-        rad += 5
-        ibox = rad*math.sqrt(2)
-        xig = cx-(ibox/2)
-        yig = cy-(ibox/2)
-        insSquare=pygame.Rect(xig,yig,ibox,ibox)
-    
-    #mountain collide square
-    if square.colliderect(mountainSquare):
-        square.x = 10
-        square.y = 10
-        charx = 10
-        chary = 10
-    
-    #mountain collide circle
-    if insSquare.colliderect(mountainSquare):
-        cx = rad + 10
-        cy = rad + 10
-        ibox = rad*math.sqrt(2)
-        xig = cx-(ibox/2)
-        yig = cy-(ibox/2)
-        insSquare=pygame.Rect(xig,yig,ibox,ibox)
-
-    #rect(surface, color, object)
-    pygame.draw.rect(screen, colors.get("blue"), square)
-    pygame.draw.rect(screen, colors.get("blue"), insSquare)
-    screen.blit(char, (charx, chary))
-
-    #circle(surface, color, center, radius)
-    pygame.draw.circle(screen, colors.get("red"), (cx, cy), rad)
-    
+    global insSquare, rad, yb, xb
+    score = 0
+    screen.fill(colors.get('white'))
     pygame.display.update()
-    pygame.time.delay(5)
+    Game=True
+    while Game:
+        screen.blit(bg, (0,0))
+        # screen.fill(backgrnd)
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                menu()
+        keys= pygame.key.get_pressed() #this is a list
+        #mve square
+        if keys[pygame.K_RIGHT] and square.x < WIDTH -(wb):
+            square.x += speed
+            xb += speed
+        if keys[pygame.K_LEFT] and  square.x > speed:
+            square.x -= speed
+            xb -= speed
+        if keys[pygame.K_UP] and square.y >speed:   #means clser t 0
+            square.y -= speed
+            yb -= speed
+        if keys[pygame.K_DOWN] and square.y <HEIGHT -hb:  #means clser t max value HEIGHT
+            square.y += speed
+            yb += speed
+            #mve Circle
+        if keys[pygame.K_d] and cx < WIDTH -(rad):
+            cx += speed
+            insSquare.x += speed
+        if keys[pygame.K_a] and  cx > (speed+rad):
+            cx -= speed
+            insSquare.x -= speed
+        if keys[pygame.K_w] and cy >(speed+rad):   #means clser t 0
+            cy -= speed
+            insSquare.y -= speed
+        if keys[pygame.K_s] and cy <HEIGHT -(rad):  #means clser t max value HEIGHT
+            cy += speed
+            insSquare.y += speed
 
-count = 0
-high = 0
+        if square.colliderect(insSquare):
+            print("BOOM")
+            rad+=1
+            cx=random.randint(rad, WIDTH-rad)
+            cy=random.randint(rad, HEIGHT-rad)
+            ibox = rad*math.sqrt(2)
+            xig = cx-(ibox/2)
+            yig = cy-(ibox/2)
+            score += 1
+            insSquare=pygame.Rect(xig,yig,ibox,ibox)
+
+        #rect(surface, color, rect) -> Rect
+        pygame.draw.rect(screen, colors.get("red"),square)
+        screen.blit(char, (xb, yb))
+        #circle(surface, color, center, radius)
+        pygame.draw.circle(screen, colors.get("red"), (cx,cy), rad)
+        pygame.draw.rect(screen, colors.get("red"), insSquare)
+        pygame.display.update()
+        pygame.time.delay(5)
 
 # Game 1
 def game1():
-    print("here")
-    # Background
-    screen.fill(colorTheme)
-    for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                menu()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                mousePos = pygame.mouse.get_pos()
-                # print(mousePos)
-    
-    #rect(surface, color, object)
-    pygame.draw.rect(screen, blueClr, square)
+    global insSquare, rad, yb, xb
+    score = 0
 
-    #circle(surface, color, center, radius)
-    pygame.draw.circle(screen, cyanClr, (350, 350), 25)
+    screen.fill(colors.get('white'))
+
     pygame.display.update()
 
-    keys = pygame.key.get_pressed() #allow us to see what key was pressed
-    
-    #square movement
-    if keys[pygame.K_d] and square.x < WIDTH-wb:
-        square.x += speed
-    if keys[pygame.K_a] and square.x > 0:
-        square.x -= speed
-    if keys[pygame.K_s] and square.y < HEIGHT-hb:
-        square.y += speed
-    if keys[pygame.K_w] and square.y > 0:
-        square.y -= speed
+    Game=True
+    while Game:
+        screen.fill(colors.get('white'))
+        # screen.fill(backgrnd)
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                menu()
+                
+        keys= pygame.key.get_pressed() #this is a list
+        #mve square
+        if keys[pygame.K_RIGHT] and square.x < WIDTH -(wb):
+            square.x += speed
+            xb += speed
+        if keys[pygame.K_LEFT] and  square.x > speed:
+            square.x -= speed
+            xb -= speed
+        if keys[pygame.K_UP] and square.y >speed:   #means clser t 0
+            square.y -= speed
+            yb -= speed
+        if keys[pygame.K_DOWN] and square.y <HEIGHT -hb:  #means clser t max value HEIGHT
+            square.y += speed
+            yb += speed
+            #mve Circle
+        if keys[pygame.K_d] and cx < WIDTH -(rad):
+            cx += speed
+            insSquare.x += speed
+        if keys[pygame.K_a] and  cx > (speed+rad):
+            cx -= speed
+            insSquare.x -= speed
+        if keys[pygame.K_w] and cy >(speed+rad):   #means clser t 0
+            cy -= speed
+            insSquare.y -= speed
+        if keys[pygame.K_s] and cy <HEIGHT -(rad):  #means clser t max value HEIGHT
+            cy += speed
+            insSquare.y += speed
 
-    #circle and inscribed square movement
-    if keys[pygame.K_RIGHT] and cx < WIDTH-rad:
-        cx += speed
-    insSquare.x += speed
-    if keys[pygame.K_LEFT] and cx > 0+rad:
-        cx -= speed
-    insSquare.x -= speed
-    if keys[pygame.K_DOWN] and cy < HEIGHT-rad:
-        cy += speed
-    insSquare.y += speed
-    if keys[pygame.K_UP] and cy > 0+rad:
-        cy -= speed
-    insSquare.y -= speed
+        if square.colliderect(insSquare):
+            print("BOOM")
+            rad+=1
+            cx=random.randint(rad, WIDTH-rad)
+            cy=random.randint(rad, HEIGHT-rad)
+            ibox = rad*math.sqrt(2)
+            xig = cx-(ibox/2)
+            yig = cy-(ibox/2)
+            score += 1
+            insSquare=pygame.Rect(xig,yig,ibox,ibox)
 
-    #circle square collide
-    if square.colliderect(insSquare): 
-        print("BOOM")
-    cx = random.randint(rad, WIDTH-rad)
-    cy = random.randint(rad, HEIGHT-rad)
-    rad += 5
-    ibox = rad*math.sqrt(2)
-    xig = cx-(ibox/2)
-    yig = cy-(ibox/2)
-    insSquare=pygame.Rect(xig,yig,ibox,ibox)
-    count+=1
-    score = 800-40*count
-    if score > high:   
-        high=score
-        print("Your score is "+str(score))
-        input("Press enter: ")
-        os.system('cls')
-        print(high)
-    if high > 50:
-            myFile = open("Game 2\SMscore.txt", 'a')
-            date=datetime.datetime.now()
-            scrLine = str(high)+"\t " + "\t"+ date.strftime("%m-%d-%Y")+ "\n"
-            myFile.write(scrLine)     # Print the high score
-            myFile.close() 
+        #rect(surface, color, rect) -> Rect
+        pygame.draw.rect(screen, blueClr,square)
+        #circle(surface, color, center, radius)
+        pygame.draw.circle(screen, cyanClr, (cx,cy), rad)
+        pygame.draw.rect(screen, cyanClr, insSquare)
+        pygame.display.update()
+        pygame.time.delay(5)
+    score = 0
 
+    screen.fill(colors.get('white'))
 
+    pygame.display.update()
 
+    Game=True
+    while Game:
+        screen.fill(colors.get('white'))
+        # screen.fill(backgrnd)
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                menu()
+                
+        keys= pygame.key.get_pressed() #this is a list
+        #mve square
+        if keys[pygame.K_RIGHT] and square.x < WIDTH -(wb):
+            square.x += speed
+            xb += speed
+        if keys[pygame.K_LEFT] and  square.x > speed:
+            square.x -= speed
+            xb -= speed
+        if keys[pygame.K_UP] and square.y >speed:   #means clser t 0
+            square.y -= speed
+            yb -= speed
+        if keys[pygame.K_DOWN] and square.y <HEIGHT -hb:  #means clser t max value HEIGHT
+            square.y += speed
+            yb += speed
+            #mve Circle
+        if keys[pygame.K_d] and cx < WIDTH -(rad):
+            cx += speed
+            insSquare.x += speed
+        if keys[pygame.K_a] and  cx > (speed+rad):
+            cx -= speed
+            insSquare.x -= speed
+        if keys[pygame.K_w] and cy >(speed+rad):   #means clser t 0
+            cy -= speed
+            insSquare.y -= speed
+        if keys[pygame.K_s] and cy <HEIGHT -(rad):  #means clser t max value HEIGHT
+            cy += speed
+            insSquare.y += speed
 
-#rect(surface, color, object)
-pygame.draw.rect(screen, colors.get("blue"), square)
-pygame.draw.rect(screen, colors.get("blue"), insSquare)
+        if square.colliderect(insSquare):
+            print("BOOM")
+            rad+=1
+            cx=random.randint(rad, WIDTH-rad)
+            cy=random.randint(rad, HEIGHT-rad)
+            ibox = rad*math.sqrt(2)
+            xig = cx-(ibox/2)
+            yig = cy-(ibox/2)
+            score += 1
+            insSquare=pygame.Rect(xig,yig,ibox,ibox)
 
-#circle(surface, color, center, radius)
-pygame.draw.circle(screen, colors.get("red"), (cx, cy), rad)
-pygame.display.update()
-pygame.time.delay(5)
+        #rect(surface, color, rect) -> Rect
+        pygame.draw.rect(screen, blueClr,square)
+        #circle(surface, color, center, radius)
+        pygame.draw.circle(screen, cyanClr, (cx,cy), rad)
+        pygame.draw.rect(screen, cyanClr, insSquare)
+        pygame.display.update()
+        pygame.time.delay(5)
+
 
 def scoreboard():
      #title font
@@ -502,12 +520,12 @@ def exit():
     pygame.display.update()
     pygame.time.delay(1000)
 
-    if high > 50:
-            myFile = open("PygameFile\MenuScore.txt", 'a')
-            date=datetime.datetime.now()
-            scrLine = str(high) + "\t"+ date.strftime("%m-%d-%Y")+ "\n"
-            myFile.write(scrLine)
-            myFile.close()    
+    #if high > 50:
+            #myFile = open("PygameFile\MenuScore.txt", 'a')
+            #date=datetime.datetime.now()
+            #scrLine = str(high) + "\t"+ date.strftime("%m-%d-%Y")+ "\n"
+            #myFile.write(scrLine)
+            #myFile.close()    
 
     pygame.quit()
     sys.quit()

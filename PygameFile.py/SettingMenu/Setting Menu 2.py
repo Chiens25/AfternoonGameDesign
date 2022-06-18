@@ -407,24 +407,46 @@ def game2():
 
     def Xwinnerult():
         screen.fill("YELLOW")
-        Title = TITLE_FONT.render(("PLAYER 1 IS THE CHAMPION"), 1, colors.get("white"))
+        Title = TITLE_FONT.render(("X IS THE CHAMPION"), 1, colors.get("white"))
         xd = WIDTH//2 - (Title.get_width()//2)
-        screen.blit(Title, (xd, 50))\
+        screen.blit(Title, (xd, 300))\
         
-        pygame.time.delay(1000)
         pygame.display.update()
+        pygame.time.delay(500)
+
+        pygame.quit()
+        sys.exit()
+        print("you quit")
+        # UPDATE FILE
+
 
     def Owinnerult():
         screen.fill("YELLOW")
-        Title = TITLE_FONT.render(("PLAYER 2 IS THE CHAMPION"), 1, colors.get("white"))
+        Title = TITLE_FONT.render(("O IS THE CHAMPION"), 1, colors.get("white"))
         xd = WIDTH//2 - (Title.get_width()//2)
-        screen.blit(Title, (xd, 50))\
+        screen.blit(Title, (xd, 300))\
         
-        pygame.time.delay(1000)
         pygame.display.update()
+        pygame.time.delay(500)
+
+        pygame.quit()
+        sys.exit()
+        print("you quit")
+        # UPDATE FILE
                         
 
-            
+    def tieult():
+        screen.fill("YELLOW")
+        Title = TITLE_FONT.render(("IT'S A TIE"), 1, colors.get("white"))
+        xd = WIDTH//2 - (Title.get_width()//2)
+        screen.blit(Title, (xd, 300))\
+        
+        pygame.time.delay(500)
+        pygame.display.update()
+
+        pygame.quit()
+        sys.quit()
+        print("you quit")
 
     Xcount=0
     Ocount=0
@@ -482,7 +504,6 @@ def game2():
                 winner = 0
                 
 
-    
 
 
     def gameEnd():
@@ -492,43 +513,35 @@ def game2():
 
         if winner == 1:
             Xcount+=1
-            Xwin = GIANT_FONT.render("X WINS", 1, "white")
-            screen.fill("red")
-            screen.blit(Xwin, (WIDTH//4, 50))\
-
-            pygame.time.delay(1000)
-            pygame.display.update()
+            text = GIANT_FONT.render("X WINS", 1, "white")
+        
+        
 
         if winner == -1:
             Ocount+=1
-            Owin = GIANT_FONT.render("O WINS", 1, "white")
-            screen.fill("red")
-            screen.blit(Owin, (WIDTH//4, 50))\
-
-            pygame.time.delay(1000)
-            pygame.display.update()
+            text = GIANT_FONT.render("O WINS", 1, "white")
+        
+            
         
         if winner == 0:
-            Tie = GIANT_FONT.render("XO TIE GAME", 1, "white")
-            screen.fill("red")
-            screen.blit(Tie, (WIDTH//4, 50))\
+            text = GIANT_FONT.render("XO TIE", 1, "white")
+            
+        screen.fill("red")
+        screen.blit(text, (WIDTH//4, 50))\
 
-            pygame.time.delay(1000)
-            pygame.display.update()
-
-        if Xcount == 3:
-            Xcount = 0
-            Ocount = 0
-            Xwinnerult()
-        if Ocount == -3:
-            Xcount = 0
-            Ocount = 0
-            Owinnerult()
     
         PlayAgain = MENU_FONT.render("Play Again?:", 1, colors.get("white"))
         screen.blit(PlayAgain, (WIDTH//8, 300))
-        pygame.display.update()
-        pygame.time.delay(50)
+        
+
+        XScoretext = MENU_FONT.render(("X's Wins:"+ str(Xcount)), 1, colors.get("white"))
+        screen.blit(XScoretext, (WIDTH//3, 200))
+    
+
+        OScoretext = MENU_FONT.render(("O's Wins:"+ str(Ocount)), 1, colors.get("white"))
+        screen.blit(OScoretext, (WIDTH//3*2, 200))
+    
+
         #creating buttons
         Button_1 = pygame.Rect(200, 400, 100, 50)
         Button_2 = pygame.Rect(400, 400, 100, 50)
@@ -557,12 +570,15 @@ def game2():
                         markers = []
                         zero_Array()
                         run = False
-
-
                     if Button_2.collidepoint(mx, my):
+                        if Xcount > Ocount:
+                            Xwinnerult()
+                        if Ocount > Xcount:
+                            Owinnerult()
                         pygame.quit()
                         sys.quit()
                         print("you quit")
+                        # Add X/O score date
 
     zero_Array()
     print()
@@ -591,93 +607,74 @@ def game2():
                         gameOver = False
                         gameEnd()
                         print("Game Over")
-
                 
-
                 
-            
-            
-            
-    pygame.display.update() 
-    pygame.time.delay(100)
+        pygame.display.update() 
+        pygame.time.delay(100)
 
 # Game 1
 def game1():
-    speed = 1
-    run = True
-    background = clr
-    while run:
-        screen.blit(bg, (0,0))
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
-                print("you quit")
-            # Mouse position coordinates
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                mousePos = pygame.mouse.get_pos()
-                print(mousePos)
-    # Square movement
-        keys = pygame.key.get_pressed() # provide a list of 11 keys
-        if keys [pygame.K_a] and square.x > speed:
-            square.x -= speed
-        if keys[pygame.K_d] and square.x < WIDTH - (wb+speed):
-            square.x += speed
-        if keys [pygame.K_w] and square.y > speed:
-            square.y -= speed
-        if keys[pygame.K_d] and square.y < HEIGHT - (hb+speed):
-            square.y += speed
-    # Circle movement
-        if keys [pygame.K_LEFT] and cx > (speed+rad):
-            cx -= speed
-            inSquare.x -= speed
-        if keys[pygame.K_RIGHT] and cx < WIDTH - (rad+speed):
-            cx += speed
-            inSquare.x += speed
-        if keys [pygame.K_UP] and cy > (rad+speed):
-            cy -= speed
-            inSquare.y -= speed
-        if keys[pygame.K_DOWN] and cy < HEIGHT - (rad+speed):
-            cy += speed
-            inSquare.y += speed
+    global insSquare, rad, yb, xb
+    score = 0
 
-        # rect(surface, color, object)
-        if square.collidepoint((cx,cy)):
+    screen.fill(colors.get('white'))
+
+    pygame.display.update()
+
+    Game=True
+    while Game:
+        screen.fill(colors.get('white'))
+        # screen.fill(backgrnd)
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                menu()
+                
+        keys= pygame.key.get_pressed() #this is a list
+        #mve square
+        if keys[pygame.K_RIGHT] and square.x < WIDTH -(wb):
+            square.x += speed
+            xb += speed
+        if keys[pygame.K_LEFT] and  square.x > speed:
+            square.x -= speed
+            xb -= speed
+        if keys[pygame.K_UP] and square.y >speed:   #means clser t 0
+            square.y -= speed
+            yb -= speed
+        if keys[pygame.K_DOWN] and square.y <HEIGHT -hb:  #means clser t max value HEIGHT
+            square.y += speed
+            yb += speed
+            #mve Circle
+        if keys[pygame.K_d] and cx < WIDTH -(rad):
+            cx += speed
+            insSquare.x += speed
+        if keys[pygame.K_a] and  cx > (speed+rad):
+            cx -= speed
+            insSquare.x -= speed
+        if keys[pygame.K_w] and cy >(speed+rad):   #means clser t 0
+            cy -= speed
+            insSquare.y -= speed
+        if keys[pygame.K_s] and cy <HEIGHT -(rad):  #means clser t max value HEIGHT
+            cy += speed
+            insSquare.y += speed
+
+        if square.colliderect(insSquare):
             print("BOOM")
-            cx = random.randint(rad,WIDTH-rad)
-            cy = random.randint(rad,HEIGHT-rad)
-            rad+= 5
-            # Inscibed square
+            rad+=1
+            cx=random.randint(rad, WIDTH-rad)
+            cy=random.randint(rad, HEIGHT-rad)
             ibox = rad*math.sqrt(2)
             xig = cx-(ibox/2)
             yig = cy-(ibox/2)
-            inSquare = pygame.Rect(xig,yig,ibox, ibox)
-            screen.blit(char, (200,200))
+            score += 1
+            insSquare=pygame.Rect(xig,yig,ibox,ibox)
 
-        # Mountain collid
-        if square.colliderect(mountainSquare):
-            square.x = 10
-            square.y = 10
-            charx = 10
-            chary = 10
-            
-            #Bounce
-            mountainSquare = pygame.Rect(200,270,180,250)
-            pygame.draw.rect(screen, colors.get("white"), mountainSquare)
-            
-        pygame.draw.rect(screen, blueClr, square)
-        # circle(surface, color, center, radius)
-        pygame.draw.circle(screen, cyanClr, (cx, cy), rad) # Circle is not an object
+        #rect(surface, color, rect) -> Rect
+        pygame.draw.rect(screen, blueClr,square)
+        #circle(surface, color, center, radius)
+        pygame.draw.circle(screen, cyanClr, (cx,cy), rad)
+        pygame.draw.rect(screen, cyanClr, insSquare)
         pygame.display.update()
         pygame.time.delay(5)
-
-    #rect(surface, color, object)
-    pygame.draw.rect(screen, colors.get("blue"), square)
-    pygame.draw.rect(screen, colors.get("blue"), insSquare)
-
-    #circle(surface, color, center, radius)
-    pygame.draw.circle(screen, colors.get("red"), (cx, cy), rad)
-    pygame.display.update()
-    pygame.time.delay(5)
 
 
 def scoreboard():
