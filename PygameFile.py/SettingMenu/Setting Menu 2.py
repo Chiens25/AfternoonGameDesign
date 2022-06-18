@@ -22,7 +22,7 @@ colors = {"white":(255,255,255), "grey":(245,245,245), "black":(0,0,0), "red":(2
 clr = colors.get("white")
 game = 0
 #create a display
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
 pygame.display.set_caption("My First Game") # title of the window
 
 blueClr = (0,0,255)
@@ -76,7 +76,7 @@ mixer.music.play(-1)
 
 def settings():
     global screen
-    global colorTheme, mx, my
+    global colorTheme, mx, my, WIDTH, HEIGHT
     screen.fill(colorTheme)
     Title = TITLE_FONT.render("Settings", 1, colors.get("black"))
     xd = WIDTH//2 - (Title.get_width()//2)
@@ -182,7 +182,6 @@ def settings():
                     HEIGHT = 700
                     screen = pygame.display.set_mode((WIDTH, HEIGHT))
                 if Button_Size2.collidepoint(mx, my):
-                    print("here")
                     WIDTH == 900
                     HEIGHT = 700
                     screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -210,7 +209,7 @@ def user():
     # Create Box, Relative to WIDTH and HEIGHT
 
 
-    input_rect = pygame.Rect(WIDTH//3, HEIGHT//3, 200, 50)
+    input_rect = pygame.Rect(WIDTH//4, HEIGHT//3, 350, 50)
     pygame.draw.rect(screen, colors.get("pink"), input_rect)
 
     pygame.display.update()
@@ -254,10 +253,15 @@ def user():
 
 # Menu
 def menu():
+    global userName
     screen.fill(colorTheme)
     Title = TITLE_FONT.render("Menu", 1, colors.get("black")) # Create a title
     xd = WIDTH//2 - (Title.get_width()//2)
     screen.blit(Title, (xd, 50))
+
+    Hello = MENU_FONT.render("Hello " + str(userName) + ", Welcome to the Game!", 1, colors.get("blue")) # Create a title
+    pd = WIDTH//2 - (Hello.get_width()//2)
+    screen.blit(Hello, (pd, 150))
     
     #creating buttons
     Button_Instruct = pygame.Rect(WIDTH//3, 200, 230, 50)
@@ -671,7 +675,7 @@ def game1():
         if keys[pygame.K_DOWN] and square.y <HEIGHT -hb:  #means clser t max value HEIGHT
             square.y += speed
             yb += speed
-            #mve Circle
+            # Move Circle
         if keys[pygame.K_d] and cx < WIDTH -(rad):
             cx += speed
             insSquare.x += speed
@@ -727,9 +731,13 @@ def scoreboard():
         li += 40 # Add 40 pixels between each printed line
 
     myFile.close()
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                menu()
+
     
-
-
 
 def exit():
     print("here")
