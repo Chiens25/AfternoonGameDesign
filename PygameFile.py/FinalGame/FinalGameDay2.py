@@ -310,7 +310,7 @@ def menu():
                     game1()
                 if Button_Game2.collidepoint(mx, my):
                     game2()
-                if Button_Game2.collidepoint(mx, my):
+                if Button_Game3.collidepoint(mx, my):
                     game3()
                 if Button_Score.collidepoint(mx, my):
                     scoreboard()
@@ -650,26 +650,510 @@ def game1():
 
 # RPS Level 2
 def game2():
-    global userName
-    score = 0
+    def checkwinner():
+        global player, computer
+        if (player == 'r' and computer == 's') or (player == 's' and computer == 'p') or (player == 'p' and computer == 'r'):
+            maze()
+        if (player == 'r' and computer == 'r') or (player == 'p' and computer == 'p') or (player == 's' and computer == 's'):
+            tie()
+        if (computer == 'r' and player == 's') or (computer == 's' and player == 'p') or (computer == 'p' and player == 'r'):
+            lose()
 
-    Game=True
+    def RPS():
+        global computer, player
+
+        screen.blit(bg, (0,0))
+        screen.blit(Prock, (xb, yb))
+        screen.blit(COMrock, ((700-150)- xb, yb))
+
+        Player = MENU_FONT.render("Player", 1, colors.get("black")) # Designate title font and content
+        screen.blit(Player, (xb+50, 300)) # Display
+        COM = MENU_FONT.render("COM", 1, colors.get("black")) # Designate title font and content
+        screen.blit(COM, (WIDTH-(xb+100), 300)) # Display
+
+        # Back button
+        Button_Back = pygame.Rect(20, 20, 100, 50)
+        pygame.draw.rect(screen, colors.get("red"), Button_Back)
+        textBack = MENU_FONT.render("Back", 1, colors.get("black"))
+        screen.blit(textBack, (25, 25))
+        pygame.display.update()
+        pygame.time.delay(50)
+
+
+        computer = random.choice(['r','p','s']) # random working
+
+        Button_R = pygame.Rect(WIDTH//12, 500, 120, 50)
+        Button_P = pygame.Rect(WIDTH//12*5, 500, 120, 50)
+        Button_S = pygame.Rect(WIDTH//12*9, 500, 120, 50)
+        pygame.draw.rect(screen, colors.get("pink"), Button_R)
+        pygame.draw.rect(screen, colors.get("pink"), Button_P)
+        pygame.draw.rect(screen, colors.get("pink"), Button_S)
+
+        textR = MENU_FONT.render("Rock", 1, colors.get("black"))
+        textP = MENU_FONT.render("Paper", 1, colors.get("black"))
+        textS = MENU_FONT.render("Scissors", 1, colors.get("black"))
+        screen.blit(textR, (WIDTH//12+30, 510))
+        screen.blit(textP, (WIDTH//12*5+30, 510))
+        screen.blit(textS, (WIDTH//12*9+30, 510))
+        pygame.display.update()
+
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    mousePos = pygame.mouse.get_pos()
+                    mx = mousePos[0]
+                    my = mousePos[1]
+                    if Button_Back.collidepoint(mx, my):
+                        menu()
+                    if Button_R.collidepoint(mx, my):
+                        player = 'r'
+                        screen.blit(Prock, (xb, yb))
+                        pygame.display.update()
+                        print(player)
+                        if computer == 'r':
+                            screen.blit(COMrock, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        if computer == 'p':
+                            screen.blit(COMpaper, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        if computer == 's':
+                            screen.blit(COMscissor, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        checkwinner()
+                    if Button_P.collidepoint(mx, my):
+                        player = 'p'
+                        screen.blit(Ppaper, (xb, yb))
+                        pygame.display.update()
+                        print(player)
+                        if computer == 'r':
+                            screen.blit(COMrock, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        if computer == 'p':
+                            screen.blit(COMpaper, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        if computer == 's':
+                            screen.blit(COMscissor, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        checkwinner()
+                        
+                    if Button_S.collidepoint(mx, my):
+                        player = 's'
+                        screen.blit(Pscissor, (xb, yb))
+                        pygame.display.update()
+                        print(player)
+                        if computer == 'r':
+                            screen.blit(COMrock, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        if computer == 'p':
+                            screen.blit(COMpaper, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        if computer == 's':
+                            screen.blit(COMscissor, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        checkwinner()
+                                  
+
+    def maze():
+        global isJump, x, jumpCount, y
+        print("create a maze")
+        pygame.time.delay(200)
+        screen.fill("yellow")
+        Win = GIANT_FONT.render(("YOU WON!"), 1, colors.get("white"))
+        xd = WIDTH//2 - (Win.get_width()//2)
+        screen.blit(Win, (xd, 200))\
+        
+        pygame.display.update() 
+        pygame.time.delay(1000)
+
+        def redrawGameWindow():
+            global walkCount, hitbox, y
+            screen.blit(bg2, (0,0)) # Blit makes things appear on the game screen
+
+            Button_Back = pygame.Rect(20, 20, 100, 50)
+            pygame.draw.rect(screen, colors.get("red"), Button_Back)
+            textBack = MENU_FONT.render("Back", 1, colors.get("black"))
+            screen.blit(textBack, (25, 25))
+
+            Block1 = pygame.Rect(100, 500, 100, 50)
+            pygame.draw.rect(screen, colors.get("black"), Block1)
+
+            if walkCount + 1 >= 27:
+                walkCount = 0
+
+            if left:
+                screen.blit(walkLeft[walkCount//3], (x,y))
+                hitbox = pygame.Rect(x,y,width,height)
+                walkCount -= 1
+            elif right:
+                screen.blit(walkRight[walkCount//3], (x,y))
+                hitbox = pygame.Rect(x,y,width,height)
+                walkCount +=1
+            else:
+                screen.blit(char, (x,y))
+                hitbox = pygame.Rect(x,y,width,height)
+            
+            
+            pygame.display.update()
+
+
+
+        #mainloop
+        run = True
+        while run:
+            clock.tick(27)
+
+            for event in pygame.event.get(): # Allow for quit
+                if event.type == pygame.QUIT:
+                    run = False
+            keys = pygame.key.get_pressed()
+            # Move left only if not at the left border
+            if keys[pygame.K_LEFT] and x > vel:# Left arrow key
+                x -= vel
+                left = True
+                right = False
+            # Same for right
+            elif keys[pygame.K_RIGHT] and x < 700 - width - vel:
+                x += vel
+                right = True
+                left = False
+            else: # If not, stay in place
+                right = False
+                left = False
+                walkCount = 0
+                
+            if not(isJump): # Space key to use jump
+                if keys[pygame.K_SPACE]:
+                    isJump = True
+                    right = False
+                    left = False
+                    walkCount = 0
+                
+            else:
+
+                if jumpCount >= -10:
+                    neg = 1
+                    if jumpCount < 0:
+                        neg = -1
+                    y -= (jumpCount ** 2) * 0.5 * neg
+                    if Block1.colliderect(hitbox):
+                        if neg > 0:
+                            print("we are above")
+                        if neg < 0:
+                            print("we are below")
+                    jumpCount -= 1
+                    
+                else:
+                    isJump = False
+                    jumpCount = 10
+                    
+            redrawGameWindow()
+
+    def tie():
+        print("create tie screen")
+        pygame.time.delay(200)
+        screen.fill("violet")
+        Tie = GIANT_FONT.render(("TIE!"), 1, colors.get("white"))
+        xd = WIDTH//2 - (Tie.get_width()//2)
+        screen.blit(Tie, (xd, 200))\
+        
+        pygame.display.update() 
+        pygame.time.delay(1000)
+
+        RPS()
+
+    def lose():
+        global colors
+        print("create lose screen")
+        pygame.time.delay(200)
+        screen.fill("turquoise")
+        Lose = GIANT_FONT.render(("YOU LOST!"), 1, colors.get("white"))
+        xd = WIDTH//2 - (Lose.get_width()//2)
+        screen.blit(Lose, (xd, 200))\
+        
+        pygame.display.update() 
+        pygame.time.delay(1000)
+
+        RPS()
+
+
+    Game = True
     while Game:
-        screen.fill(colors.get('white'))
-        # screen.fill(backgrnd)
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
-                myFile = open("PygameFile.py\FinalGame\FGScoreL2.txt", 'a')
-                date=datetime.datetime.now()
-                scrLine = str(score)+"\t\t\t "+ userName + "\t\t\t"+ date.strftime("%m-%d-%Y")+ "\n"
-                myFile.write(scrLine)     # Print the high score
-                myFile.close() 
-                print(scrLine)
-                menu()
+                #Menu(mainTitle,messageMenu)
+                pygame.quit()
+                sys.exit()
+                
+        pygame.display.update() 
+        pygame.time.delay(100)
+
+        RPS()
 
 # RPS Level 3
 def game3():
-    print ("game3")
+    print("HI")
+    def checkwinner():
+        global player, computer
+        if (player == 'r' and computer == 's') or (player == 's' and computer == 'p') or (player == 'p' and computer == 'r'):
+            maze()
+        if (player == 'r' and computer == 'r') or (player == 'p' and computer == 'p') or (player == 's' and computer == 's'):
+            tie()
+        if (computer == 'r' and player == 's') or (computer == 's' and player == 'p') or (computer == 'p' and player == 'r'):
+            lose()
+
+    def RPS():
+        global computer, player
+
+        screen.blit(bg, (0,0))
+        screen.blit(Prock, (xb, yb))
+        screen.blit(COMrock, ((700-150)- xb, yb))
+
+        Player = MENU_FONT.render("Player", 1, colors.get("black")) # Designate title font and content
+        screen.blit(Player, (xb+50, 300)) # Display
+        COM = MENU_FONT.render("COM", 1, colors.get("black")) # Designate title font and content
+        screen.blit(COM, (WIDTH-(xb+100), 300)) # Display
+
+        # Back button
+        Button_Back = pygame.Rect(20, 20, 100, 50)
+        pygame.draw.rect(screen, colors.get("red"), Button_Back)
+        textBack = MENU_FONT.render("Back", 1, colors.get("black"))
+        screen.blit(textBack, (25, 25))
+        pygame.display.update()
+        pygame.time.delay(50)
+
+
+        computer = random.choice(['r','p','s']) # random working
+
+        Button_R = pygame.Rect(WIDTH//12, 500, 120, 50)
+        Button_P = pygame.Rect(WIDTH//12*5, 500, 120, 50)
+        Button_S = pygame.Rect(WIDTH//12*9, 500, 120, 50)
+        pygame.draw.rect(screen, colors.get("pink"), Button_R)
+        pygame.draw.rect(screen, colors.get("pink"), Button_P)
+        pygame.draw.rect(screen, colors.get("pink"), Button_S)
+
+        textR = MENU_FONT.render("Rock", 1, colors.get("black"))
+        textP = MENU_FONT.render("Paper", 1, colors.get("black"))
+        textS = MENU_FONT.render("Scissors", 1, colors.get("black"))
+        screen.blit(textR, (WIDTH//12+30, 510))
+        screen.blit(textP, (WIDTH//12*5+30, 510))
+        screen.blit(textS, (WIDTH//12*9+30, 510))
+        pygame.display.update()
+
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    mousePos = pygame.mouse.get_pos()
+                    mx = mousePos[0]
+                    my = mousePos[1]
+                    if Button_Back.collidepoint(mx, my):
+                        menu()
+                    if Button_R.collidepoint(mx, my):
+                        player = 'r'
+                        screen.blit(Prock, (xb, yb))
+                        pygame.display.update()
+                        print(player)
+                        if computer == 'r':
+                            screen.blit(COMrock, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        if computer == 'p':
+                            screen.blit(COMpaper, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        if computer == 's':
+                            screen.blit(COMscissor, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        checkwinner()
+                    if Button_P.collidepoint(mx, my):
+                        player = 'p'
+                        screen.blit(Ppaper, (xb, yb))
+                        pygame.display.update()
+                        print(player)
+                        if computer == 'r':
+                            screen.blit(COMrock, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        if computer == 'p':
+                            screen.blit(COMpaper, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        if computer == 's':
+                            screen.blit(COMscissor, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        checkwinner()
+                        
+                    if Button_S.collidepoint(mx, my):
+                        player = 's'
+                        screen.blit(Pscissor, (xb, yb))
+                        pygame.display.update()
+                        print(player)
+                        if computer == 'r':
+                            screen.blit(COMrock, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        if computer == 'p':
+                            screen.blit(COMpaper, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        if computer == 's':
+                            screen.blit(COMscissor, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        checkwinner()
+                                  
+
+    def maze():
+        global isJump, x, jumpCount, y
+        print("create a maze")
+        pygame.time.delay(200)
+        screen.fill("yellow")
+        Win = GIANT_FONT.render(("YOU WON!"), 1, colors.get("white"))
+        xd = WIDTH//2 - (Win.get_width()//2)
+        screen.blit(Win, (xd, 200))\
+        
+        pygame.display.update() 
+        pygame.time.delay(1000)
+
+        def redrawGameWindow():
+            global walkCount, hitbox, y
+            screen.blit(bg2, (0,0)) # Blit makes things appear on the game screen
+
+            Button_Back = pygame.Rect(20, 20, 100, 50)
+            pygame.draw.rect(screen, colors.get("red"), Button_Back)
+            textBack = MENU_FONT.render("Back", 1, colors.get("black"))
+            screen.blit(textBack, (25, 25))
+
+            Block1 = pygame.Rect(100, 500, 100, 50)
+            pygame.draw.rect(screen, colors.get("black"), Block1)
+
+            if walkCount + 1 >= 27:
+                walkCount = 0
+
+            if left:
+                screen.blit(walkLeft[walkCount//3], (x,y))
+                hitbox = pygame.Rect(x,y,width,height)
+                walkCount -= 1
+            elif right:
+                screen.blit(walkRight[walkCount//3], (x,y))
+                hitbox = pygame.Rect(x,y,width,height)
+                walkCount +=1
+            else:
+                screen.blit(char, (x,y))
+                hitbox = pygame.Rect(x,y,width,height)
+            
+            
+            pygame.display.update()
+
+
+
+        #mainloop
+        run = True
+        while run:
+            clock.tick(27)
+
+            for event in pygame.event.get(): # Allow for quit
+                if event.type == pygame.QUIT:
+                    run = False
+            keys = pygame.key.get_pressed()
+            # Move left only if not at the left border
+            if keys[pygame.K_LEFT] and x > vel:# Left arrow key
+                x -= vel
+                left = True
+                right = False
+            # Same for right
+            elif keys[pygame.K_RIGHT] and x < 700 - width - vel:
+                x += vel
+                right = True
+                left = False
+            else: # If not, stay in place
+                right = False
+                left = False
+                walkCount = 0
+                
+            if not(isJump): # Space key to use jump
+                if keys[pygame.K_SPACE]:
+                    isJump = True
+                    right = False
+                    left = False
+                    walkCount = 0
+                
+            else:
+
+                if jumpCount >= -10:
+                    neg = 1
+                    if jumpCount < 0:
+                        neg = -1
+                    y -= (jumpCount ** 2) * 0.5 * neg
+                    if Block1.colliderect(hitbox):
+                        if neg > 0:
+                            print("we are above")
+                        if neg < 0:
+                            print("we are below")
+                    jumpCount -= 1
+                    
+                else:
+                    isJump = False
+                    jumpCount = 10
+                    
+            redrawGameWindow()
+
+    def tie():
+        print("create tie screen")
+        pygame.time.delay(200)
+        screen.fill("violet")
+        Tie = GIANT_FONT.render(("TIE!"), 1, colors.get("white"))
+        xd = WIDTH//2 - (Tie.get_width()//2)
+        screen.blit(Tie, (xd, 200))\
+        
+        pygame.display.update() 
+        pygame.time.delay(1000)
+
+        RPS()
+
+    def lose():
+        global colors
+        print("create lose screen")
+        pygame.time.delay(200)
+        screen.fill("turquoise")
+        Lose = GIANT_FONT.render(("YOU LOST!"), 1, colors.get("white"))
+        xd = WIDTH//2 - (Lose.get_width()//2)
+        screen.blit(Lose, (xd, 200))\
+        
+        pygame.display.update() 
+        pygame.time.delay(1000)
+
+        RPS()
+
+
+    Game = True
+    while Game:
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                #Menu(mainTitle,messageMenu)
+                pygame.quit()
+                sys.exit()
+                
+        pygame.display.update() 
+        pygame.time.delay(100)
+
+        RPS()
 
 # Leaderboard
 def scoreboard():
