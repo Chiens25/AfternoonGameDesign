@@ -123,7 +123,6 @@ while run:
             y -= (jumpCount ** 2) * 0.5 * neg
             jumpCount -= 1
             if Block1.colliderect(hitbox):
-        
                 if hitbox.y < Block1.y:
                     print("up")
 
