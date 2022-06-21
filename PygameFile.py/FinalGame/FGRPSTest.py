@@ -61,6 +61,9 @@ colorTheme = colors.get("white")
 mixer.music.load('PygameFile.py\journey.wav')
 mixer.music.play(-1)
 
+# DONT PUT IN FINAL CODE !!!!
+def menu():
+    print("menu")
 
 Pcount = 0
 COMcount = 0
@@ -86,6 +89,14 @@ def RPS():
     screen.blit(Player, (xb+50, 300)) # Display
     COM = MENU_FONT.render("COM", 1, colors.get("black")) # Designate title font and content
     screen.blit(COM, (WIDTH-(xb+100), 300)) # Display
+
+    # Back button
+    Button_Back = pygame.Rect(20, 20, 100, 50)
+    pygame.draw.rect(screen, colors.get("red"), Button_Back)
+    textBack = MENU_FONT.render("Back", 1, colors.get("black"))
+    screen.blit(textBack, (25, 25))
+    pygame.display.update()
+    pygame.time.delay(50)
 
 
     computer = random.choice(['r','p','s']) # random working
@@ -114,6 +125,8 @@ def RPS():
                 mousePos = pygame.mouse.get_pos()
                 mx = mousePos[0]
                 my = mousePos[1]
+                if Button_Back.collidepoint(mx, my):
+                    menu()
                 if Button_R.collidepoint(mx, my):
                     player = 'r'
                     screen.blit(Prock, (xb, yb))
@@ -174,25 +187,39 @@ def RPS():
 
 def maze():
     print("create a maze")
+    screen.fill("yellow")
+    Win = GIANT_FONT.render(("YOU WON!"), 1, colors.get("white"))
+    xd = WIDTH//2 - (Win.get_width()//2)
+    screen.blit(Win, (xd, 200))\
+    
+    pygame.display.update() 
+    pygame.time.delay(1000)
 
 def tie():
     global colors
     print("create tie screen")
-    screen.fill("yellow")
+    screen.fill("violet")
     Tie = GIANT_FONT.render(("TIE!"), 1, colors.get("white"))
     xd = WIDTH//2 - (Tie.get_width()//2)
     screen.blit(Tie, (xd, 200))\
     
+    pygame.display.update() 
+    pygame.time.delay(1000)
+
+    RPS()
+
 def lose():
     global colors
     print("create lose screen")
     screen.fill("turquoise")
-    Lose = GIANT_FONT.render(("YOU LOSE!"), 1, colors.get("white"))
+    Lose = GIANT_FONT.render(("YOU LOST!"), 1, colors.get("white"))
     xd = WIDTH//2 - (Lose.get_width()//2)
     screen.blit(Lose, (xd, 200))\
     
     pygame.display.update() 
-    pygame.time.delay(100)
+    pygame.time.delay(1000)
+
+    RPS()
 
 
 Game = True
@@ -207,5 +234,4 @@ while Game:
     pygame.time.delay(100)
 
     RPS()
-
 

@@ -385,11 +385,30 @@ def game1():
 
     def RPS():
         global computer, player
+
+        screen.blit(bg, (0,0))
+        screen.blit(Prock, (xb, yb))
+        screen.blit(COMrock, ((700-150)- xb, yb))
+
+        Player = MENU_FONT.render("Player", 1, colors.get("black")) # Designate title font and content
+        screen.blit(Player, (xb+50, 300)) # Display
+        COM = MENU_FONT.render("COM", 1, colors.get("black")) # Designate title font and content
+        screen.blit(COM, (WIDTH-(xb+100), 300)) # Display
+
+        # Back button
+        Button_Back = pygame.Rect(20, 20, 100, 50)
+        pygame.draw.rect(screen, colors.get("red"), Button_Back)
+        textBack = MENU_FONT.render("Back", 1, colors.get("black"))
+        screen.blit(textBack, (25, 25))
+        pygame.display.update()
+        pygame.time.delay(50)
+
+
         computer = random.choice(['r','p','s']) # random working
 
-        Button_R = pygame.Rect(WIDTH//3, 200, 230, 50)
-        Button_P = pygame.Rect(WIDTH//3, 270, 230, 50)
-        Button_S = pygame.Rect(WIDTH//3, 340, 230, 50)
+        Button_R = pygame.Rect(WIDTH//12, 500, 120, 50)
+        Button_P = pygame.Rect(WIDTH//12*5, 500, 120, 50)
+        Button_S = pygame.Rect(WIDTH//12*9, 500, 120, 50)
         pygame.draw.rect(screen, colors.get("pink"), Button_R)
         pygame.draw.rect(screen, colors.get("pink"), Button_P)
         pygame.draw.rect(screen, colors.get("pink"), Button_S)
@@ -397,9 +416,9 @@ def game1():
         textR = MENU_FONT.render("Rock", 1, colors.get("black"))
         textP = MENU_FONT.render("Paper", 1, colors.get("black"))
         textS = MENU_FONT.render("Scissors", 1, colors.get("black"))
-        screen.blit(textR, (WIDTH//3, 200))
-        screen.blit(textP, (WIDTH//3, 270))
-        screen.blit(textS, (WIDTH//3, 340))
+        screen.blit(textR, (WIDTH//12+30, 510))
+        screen.blit(textP, (WIDTH//12*5+30, 510))
+        screen.blit(textS, (WIDTH//12*9+30, 510))
         pygame.display.update()
 
         while True:
@@ -411,6 +430,8 @@ def game1():
                     mousePos = pygame.mouse.get_pos()
                     mx = mousePos[0]
                     my = mousePos[1]
+                    if Button_Back.collidepoint(mx, my):
+                        menu()
                     if Button_R.collidepoint(mx, my):
                         player = 'r'
                         screen.blit(Prock, (xb, yb))
@@ -471,29 +492,43 @@ def game1():
 
     def maze():
         print("create a maze")
+        screen.fill("yellow")
+        Win = GIANT_FONT.render(("YOU WON!"), 1, colors.get("white"))
+        xd = WIDTH//2 - (Win.get_width()//2)
+        screen.blit(Win, (xd, 200))\
+        
+        pygame.display.update() 
+        pygame.time.delay(1000)
 
     def tie():
         global colors
         print("create tie screen")
-        screen.fill("yellow")
+        screen.fill("violet")
         Tie = GIANT_FONT.render(("TIE!"), 1, colors.get("white"))
         xd = WIDTH//2 - (Tie.get_width()//2)
         screen.blit(Tie, (xd, 200))\
         
+        pygame.display.update() 
+        pygame.time.delay(1000)
+
+        RPS()
+
     def lose():
         global colors
         print("create lose screen")
         screen.fill("turquoise")
-        Lose = GIANT_FONT.render(("YOU LOSE!"), 1, colors.get("white"))
+        Lose = GIANT_FONT.render(("YOU LOST!"), 1, colors.get("white"))
         xd = WIDTH//2 - (Lose.get_width()//2)
         screen.blit(Lose, (xd, 200))\
+        
+        pygame.display.update() 
+        pygame.time.delay(1000)
+
+        RPS()
+
 
     Game = True
     while Game:
-        screen.blit(bg, (0,0))
-        screen.blit(Prock, (xb, yb))
-        screen.blit(COMrock, ((700-150)- xb, yb))
-
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 #Menu(mainTitle,messageMenu)
