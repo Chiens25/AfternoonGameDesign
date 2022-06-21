@@ -1,6 +1,7 @@
 # Sydney Chien
 # 06/20/2022
 # DELETE UNNESSESARY STUFF, ORGANIZE, MAKE COMMENTS BEFORE SUBMITTING
+# "RPS" STANDS FOR ROCK PAPER SCISSORS
 import pygame, os, time, random, math, datetime, sys
 from pygame import mixer
 pygame.init()
@@ -18,7 +19,7 @@ os.system('cls')
 WIDTH = 700   # Amount of pixels
 w3 = WIDTH//3
 HEIGHT = 700
-colors = {"white":(255,255,255), "grey":(245,245,245), "black":(0,0,0), "red":(255,0,0), "green":(0,255,0), "blue":(0,0,255), "pink":(204,0,204), "orange":(255,128,0), "yellow":(255,255,0), "purple":(127,0,255)}
+colors = {"violet": (144, 13, 255), "yellow":(250, 225, 0), "pink": (255, 1, 129), "turquoise": (50, 219, 240), "white":(255,255,255), "grey":(245,245,245), "black":(0,0,0), "red":(255,0,0), "green":(0,255,0), "blue":(0,0,255), "orange":(255,128,0), "purple":(127,0,255)}
 clr = colors.get("white")
 game = 0
 #create a display
@@ -30,62 +31,53 @@ redClr = (255,0,0)
 cyanClr = (0, 255, 177)
 
 #images
-bg = pygame.image.load("PygameFile.py\FinalGame\FGImages\BoxingRing.jpg")
-bg = pygame.transform.scale(bg, (700,700))
-char = pygame.image.load("PygameFile.py\Images\PixelArtTutorial.png")
-char = pygame.transform.scale(char, (50,50))
-# screen.blit(bg, (0,0))
-# pygame.display.update()
-# pygame.time.delay(5000)
+bg = pygame.image.load("PygameFile.py\FinalGame\FGImages\BoxingRing.jpg") # Load the image
+bg = pygame.transform.scale(bg, (WIDTH,HEIGHT)) # Scale it to the size of the screen(WIDTH, HEIGHT)
 
-#circle var
-cx = 350
-cy = 350
-rad = 25
+rock = pygame.image.load("PygameFile.py\FinalGame\FGImages\Rock Image.png") # Load
+rock = pygame.transform.scale(rock, (150,150)) # Scale
+Prock = pygame.transform.rotate(rock, 270) # Rotate 270 degrees to face right
+COMrock =  pygame.transform.flip(Prock, True, False) # Flip player's rock 
 
-#square var
-hb = 50
-wb = 50
-xb = 325
+paper = pygame.image.load("PygameFile.py\FinalGame\FGImages\Paper Image.png") # Same as rock
+paper = pygame.transform.scale(paper, (150,150)) 
+Ppaper = pygame.transform.rotate(paper, 270) 
+COMpaper =  pygame.transform.flip(Ppaper, True, False)
+
+scissor = pygame.image.load("PygameFile.py\FinalGame\FGImages\Scissor Image.png") # Same as rock
+scissor = pygame.transform.scale(scissor, (150,150)) 
+Pscissor = pygame.transform.rotate(scissor, 270) 
+COMscissor =  pygame.transform.flip(Pscissor, True, False)
+
+
+# RPS Image Positioning Var
+xb = 100
 yb = 325
-square = pygame.Rect(xb,yb,wb,hb) #create the object to draw
-
-#char var
-charx = xb
-chary = yb
 
 mx = 0
 my = 0
-
-#inscribed square
-ibox = rad*math.sqrt(2)
-xig = cx-(ibox/2)
-yig = cy-(ibox/2)
-insSquare = pygame.Rect(xig,yig,ibox,ibox)
-
-#bounce
-mountainSquare = pygame.Rect(250, 320, 180, 250)
 
 #Game Variables
 speed = 2
 run = True
 high = 0
-background = colors.get("grey")
-colorTheme = colors.get("white")
-mixer.music.load('PygameFile.py\journey.wav')
+background = colors.get("grey") 
+colorTheme = colors.get("white") # Set to colorTheme to change var in settings
+mixer.music.load('PygameFile.py\journey.wav') # Play music
 mixer.music.play(-1)
 
+# Settings
 def settings():
     global screen
     global colorTheme, mx, my, WIDTH, HEIGHT
     screen.fill(colorTheme)
-    Title = TITLE_FONT.render("Settings", 1, colors.get("black"))
-    xd = WIDTH//2 - (Title.get_width()//2)
-    screen.blit(Title, (xd, 10))
+    Title = TITLE_FONT.render("Settings", 1, colors.get("black")) # Designate title font and content
+    xd = WIDTH//2 - (Title.get_width()//2) # Make  x coordinate half of screen, minus half of title for centering
+    screen.blit(Title, (xd, 10)) # Display
 
     # Color Settings
-    ColorTheme = MENU_FONT.render("Background Color:", 1, colors.get("black"))
-    screen.blit(ColorTheme, (w3, 70))
+    ColorTheme = MENU_FONT.render("Background Color:", 1, colors.get("black")) # Same as title
+    screen.blit(ColorTheme, (w3, 70)) # w3 = WIDTH//3
     pygame.display.update()
     pygame.time.delay(50)
 
@@ -121,14 +113,15 @@ def settings():
     pygame.display.update()
     pygame.time.delay(50)
 
+    # Create Shape and Color Buttons
     Button_Size1 = pygame.Rect(w3, 350, 230, 50)
     Button_Size2 = pygame.Rect(w3, 420, 230, 50)
     Button_Size3 = pygame.Rect(w3, 490, 230, 50)
-
     pygame.draw.rect(screen, colors.get("grey"), Button_Size1)
     pygame.draw.rect(screen, colors.get("grey"), Button_Size2)
     pygame.draw.rect(screen, colors.get("grey"), Button_Size3)
 
+    # Create and Position Text
     textSize1 = MENU_FONT.render("7 by 7", 1, colors.get("black"))
     textSize2= MENU_FONT.render("7 by 9", 1, colors.get("black"))
     textSize3 = MENU_FONT.render("7 by 5", 1, colors.get("black"))
@@ -144,14 +137,13 @@ def settings():
     pygame.display.update()
     pygame.time.delay(50)
 
+    # Create Buttons
     Button_SoundY = pygame.Rect(WIDTH * .3, 550, 120, 120)
     Button_SoundN = pygame.Rect(WIDTH * .6, 550, 120, 120)
-    
-
     pygame.draw.rect(screen, colors.get("grey"), Button_SoundY)
     pygame.draw.rect(screen, colors.get("grey"), Button_SoundN)
   
-
+    # Create Text
     textSoundY = MENU_FONT.render("On", 1, colors.get("black"))
     textSoundN= MENU_FONT.render("Off", 1, colors.get("black"))
     screen.blit(textSoundY, (WIDTH * .3, 560))
@@ -159,7 +151,7 @@ def settings():
     pygame.display.update()
     pygame.time.delay(50)
 
-    # Make Color Backgrounds Change Color Var, Change WIDTH and HEIGHT Var
+    # Make Color Backgrounds Change Color Var, Change WIDTH and HEIGHT Var, Play Sound
     while True:
         print("I am here")
         for event in pygame.event.get():
@@ -200,8 +192,8 @@ def settings():
 
 # User Name
 def user():
-    global userName
-    background = (255,255,255)
+    global userName # For use in calling name later
+    background = (255,255,255) # Redefine "background"
     screen.fill(background)
     pygame.display.update()
     pygame.time.delay(500)
@@ -209,38 +201,39 @@ def user():
     # Create title
     # Create Box, Relative to WIDTH and HEIGHT
 
-
+    # Create Rectangle
     input_rect = pygame.Rect(WIDTH//4, HEIGHT//3, 350, 50)
     pygame.draw.rect(screen, colors.get("pink"), input_rect)
 
     pygame.display.update()
     pygame.time.delay(500)
 
-
+    # Create Text
     Title = TITLE_FONT.render("Enter Name", 1, colors.get("black"))
     xd = WIDTH//2 - (Title.get_width()//2)
     screen.blit(Title, (xd, 10))
     pygame.display.update()
     pygame.time.delay(500)
 
+    # Set starting userName
     userName = ""
+
 
     run = True
     while run:
         for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    # Menu
+                if event.type == pygame.QUIT: # Exit button
                     print(userName)
                     pygame.quit()
                     sys.exit()
-                if event.type == pygame.KEYDOWN:
+                if event.type == pygame.KEYDOWN: # Return -> userName set, move to menu
                     if event.key == pygame.K_RETURN:
                         print(userName)
                         menu()
-                    if event.key == pygame.K_BACKSPACE:
+                    if event.key == pygame.K_BACKSPACE: # Delete -> userName is all letters except the last
                         userName = userName[:-1]
                     else:
-                        userName += event.unicode # Gives you all characters
+                        userName += event.unicode # Gives you all characters for making userName
                 screen.fill("white")
                 screen.blit(Title, (xd, 10))
                 # Draw rectangle
@@ -255,11 +248,12 @@ def user():
 # Menu
 def menu():
     global userName
-    screen.fill(colorTheme)
+    screen.fill(colorTheme) # Background
     Title = TITLE_FONT.render("Menu", 1, colors.get("black")) # Create a title
     xd = WIDTH//2 - (Title.get_width()//2)
     screen.blit(Title, (xd, 50))
 
+    # Create Welcome Message
     Hello = MENU_FONT.render("Hello " + str(userName) + ", Welcome to the Rock Paper Scissor Game!", 1, colors.get("blue")) # Create a title
     pd = WIDTH//2 - (Hello.get_width()//2)
     screen.blit(Hello, (pd, 100))
@@ -297,6 +291,7 @@ def menu():
     screen.blit(textEx, (WIDTH//3, 580))
     pygame.display.update()
 
+    # Buttons lead to quit, instructions, settings, game1, game2, score, exit functions
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -334,7 +329,7 @@ def instruction():
     content = myFile.readlines()
 
     #print instructions
-    yi = 120
+    yi = 120   # yi automatically adds space between each printed line
     for line in content:
         Insctruc = MENU_FONT.render(line[0:-1], 1, colors.get('black'))
         screen.blit(Insctruc, (40, yi))
@@ -354,6 +349,8 @@ def instruction():
     screen.blit(text1, (225, 560))
     screen.blit(text2, (425, 560))
     pygame.display.update()
+
+    # Buttons lead to Level 1 or menu
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -370,28 +367,144 @@ def instruction():
                     menu()
 
 
-gameOver=False # Check if game is over
-Xcount = 0
-Ocount = 0
+Pcount = 0
+COMcount = 0
+player = 'r'
 
-# Game 1
+# RPS Level 1
 def game1():
-    global gameOver
+    def checkwinner():
+        global player, computer
+        if (player == 'r' and computer == 's') or (player == 's' and computer == 'p') or (player == 'p' and computer == 'r'):
+            maze()
+        if (player == 'r' and computer == 'r') or (player == 'p' and computer == 'p') or (player == 's' and computer == 's'):
+            tie()
+        if (computer == 'r' and player == 's') or (computer == 's' and player == 'p') or (computer == 'p' and player == 'r'):
+            lose()
+
+    def RPS():
+        global computer, player
+        computer = random.choice(['r','p','s']) # random working
+
+        Button_R = pygame.Rect(WIDTH//3, 200, 230, 50)
+        Button_P = pygame.Rect(WIDTH//3, 270, 230, 50)
+        Button_S = pygame.Rect(WIDTH//3, 340, 230, 50)
+        pygame.draw.rect(screen, colors.get("pink"), Button_R)
+        pygame.draw.rect(screen, colors.get("pink"), Button_P)
+        pygame.draw.rect(screen, colors.get("pink"), Button_S)
+
+        textR = MENU_FONT.render("Rock", 1, colors.get("black"))
+        textP = MENU_FONT.render("Paper", 1, colors.get("black"))
+        textS = MENU_FONT.render("Scissors", 1, colors.get("black"))
+        screen.blit(textR, (WIDTH//3, 200))
+        screen.blit(textP, (WIDTH//3, 270))
+        screen.blit(textS, (WIDTH//3, 340))
+        pygame.display.update()
+
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    mousePos = pygame.mouse.get_pos()
+                    mx = mousePos[0]
+                    my = mousePos[1]
+                    if Button_R.collidepoint(mx, my):
+                        player = 'r'
+                        screen.blit(Prock, (xb, yb))
+                        pygame.display.update()
+                        print(player)
+                        if computer == 'r':
+                            screen.blit(COMrock, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        if computer == 'p':
+                            screen.blit(COMpaper, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        if computer == 's':
+                            screen.blit(COMscissor, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        checkwinner()
+                    if Button_P.collidepoint(mx, my):
+                        player = 'p'
+                        screen.blit(Ppaper, (xb, yb))
+                        pygame.display.update()
+                        print(player)
+                        if computer == 'r':
+                            screen.blit(COMrock, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        if computer == 'p':
+                            screen.blit(COMpaper, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        if computer == 's':
+                            screen.blit(COMscissor, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        checkwinner()
+                    if Button_S.collidepoint(mx, my):
+                        player = 's'
+                        screen.blit(Pscissor, (xb, yb))
+                        pygame.display.update()
+                        print(player)
+                        if computer == 'r':
+                            screen.blit(COMrock, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        if computer == 'p':
+                            screen.blit(COMpaper, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        if computer == 's':
+                            screen.blit(COMscissor, ((700-150)- xb, yb))
+                            pygame.display.update()
+                            print(computer)
+                        checkwinner()
+                    
+                    
+                
+
+    def maze():
+        print("create a maze")
+
+    def tie():
+        global colors
+        print("create tie screen")
+        screen.fill("yellow")
+        Tie = GIANT_FONT.render(("TIE!"), 1, colors.get("white"))
+        xd = WIDTH//2 - (Tie.get_width()//2)
+        screen.blit(Tie, (xd, 200))\
+        
+    def lose():
+        global colors
+        print("create lose screen")
+        screen.fill("turquoise")
+        Lose = GIANT_FONT.render(("YOU LOSE!"), 1, colors.get("white"))
+        xd = WIDTH//2 - (Lose.get_width()//2)
+        screen.blit(Lose, (xd, 200))\
 
     Game = True
     while Game:
         screen.blit(bg, (0,0))
+        screen.blit(Prock, (xb, yb))
+        screen.blit(COMrock, ((700-150)- xb, yb))
+
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 #Menu(mainTitle,messageMenu)
                 pygame.quit()
                 sys.exit()
                 
-                
         pygame.display.update() 
         pygame.time.delay(100)
 
-# Game 2
+        RPS()
+
+# RPS Level 2
 def game2():
     global userName
     score = 0
@@ -410,10 +523,11 @@ def game2():
                 print(scrLine)
                 menu()
 
+# RPS Level 3
 def game3():
     print ("game3")
 
-       
+# Leaderboard
 def scoreboard():
     #title font
     screen.fill(colorTheme)
@@ -442,8 +556,7 @@ def scoreboard():
             if event.type == pygame.QUIT:
                 menu()
 
-    
-
+# Exit
 def exit():
     print("here")
     screen.fill(colorTheme)
@@ -464,5 +577,6 @@ def exit():
     sys.quit()
     print("you quit")
 
+# Call functions
 user()
 menu()
