@@ -58,7 +58,7 @@ def redrawGameWindow():
     textBack = MENU_FONT.render("Back", 1, colors.get("black"))
     screen.blit(textBack, (25, 25))
 
-    
+    Block1 = pygame.Rect(100, 500, 100, 50)
     pygame.draw.rect(screen, colors.get("black"), Block1)
 
     if walkCount + 1 >= 27:
@@ -89,8 +89,6 @@ while run:
     for event in pygame.event.get(): # Allow for quit
         if event.type == pygame.QUIT:
             run = False
-
-
     keys = pygame.key.get_pressed()
     # Move left only if not at the left border
     if keys[pygame.K_LEFT] and x > vel:# Left arrow key
@@ -121,20 +119,16 @@ while run:
             if jumpCount < 0:
                 neg = -1
             y -= (jumpCount ** 2) * 0.5 * neg
-            jumpCount -= 1
             if Block1.colliderect(hitbox):
-                if hitbox.y < Block1.y:
-                    print("up")
-
-                elif hitbox.y > Block1.y:
-                    print("under")
-                    y = 600
-                    screen.blit(char, (x,y))
-                    hitbox = pygame.Rect(x,y,width,height)
-                   
-            else:
-                isJump = False
-                jumpCount = 10
+                if neg > 0:
+                    print("we are above")
+                if neg < 0:
+                    print("we are below")
+            jumpCount -= 1
+            
+        else:
+            isJump = False
+            jumpCount = 10
             
     redrawGameWindow()
 
