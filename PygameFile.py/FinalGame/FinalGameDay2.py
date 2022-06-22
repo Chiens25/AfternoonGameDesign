@@ -609,7 +609,7 @@ def game1():
 
     def tie():
         print("create tie screen")
-        pygame.time.delay(200)
+        pygame.time.delay(500)
         screen.fill("violet")
         Tie = GIANT_FONT.render(("TIE!"), 1, colors.get("white"))
         xd = WIDTH//2 - (Tie.get_width()//2)
@@ -623,7 +623,7 @@ def game1():
     def lose():
         global colors
         print("create lose screen")
-        pygame.time.delay(200)
+        pygame.time.delay(500)
         screen.fill("turquoise")
         Lose = GIANT_FONT.render(("YOU LOST!"), 1, colors.get("white"))
         xd = WIDTH//2 - (Lose.get_width()//2)

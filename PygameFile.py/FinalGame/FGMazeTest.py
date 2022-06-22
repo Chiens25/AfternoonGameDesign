@@ -30,7 +30,7 @@ walkLeft = [pygame.image.load('PygameFile.py\MovingImages\L1.png'), pygame.image
 bg = pygame.image.load('PygameFile.py\MovingImages\\bg.jpg') # Background image
 bg = pygame.transform.scale(bg, (WIDTH,HEIGHT))
 char = pygame.image.load('PygameFile.py\MovingImages\standing.png') # Character image for standing
-
+hitbox = char.get_rect()
 clock = pygame.time.Clock()
 
 # Setting all used variables
@@ -38,8 +38,9 @@ x = 50
 y = 600
 width = 64
 height = 64
+hitbox.x = 50
+hitbox.y = 600
 
-hitbox = pygame.Rect(x,y,width, height)
 
 vel = 5
 isJump = False
@@ -65,21 +66,24 @@ def redrawGameWindow():
         walkCount = 0
 
     if left:
-        screen.blit(walkLeft[walkCount//3], (x,y))
-        hitbox = pygame.Rect(x,y,width,height)
+        screen.blit(walkLeft[walkCount//3], hitbox)
         walkCount -= 1
     elif right:
-        screen.blit(walkRight[walkCount//3], (x,y))
-        hitbox = pygame.Rect(x,y,width,height)
+        screen.blit(walkRight[walkCount//3], hitbox)
         walkCount +=1
     else:
-        screen.blit(char, (x,y))
-        hitbox = pygame.Rect(x,y,width,height)
+        screen.blit(char, hitbox)
+        
     
     
     pygame.display.update()
 
-
+def gravity():
+    global jumpCount
+    if jumpCount > 0:
+        hitbox.y += vel
+        screen.blit(char, hitbox)
+        pygame.display.update()
 
 #mainloop
 run = True
@@ -91,45 +95,55 @@ while run:
             run = False
     keys = pygame.key.get_pressed()
     # Move left only if not at the left border
-    if keys[pygame.K_LEFT] and x > vel:# Left arrow key
-        x -= vel
+    if keys[pygame.K_LEFT] and hitbox.x > vel:# Left arrow key
+        hitbox.x -= vel
         left = True
         right = False
     # Same for right
-    elif keys[pygame.K_RIGHT] and x < 700 - width - vel:
-        x += vel
+    elif keys[pygame.K_RIGHT] and hitbox.x < 700 - width - vel:
+        hitbox.x += vel
         right = True
         left = False
     else: # If not, stay in place
         right = False
         left = False
         walkCount = 0
-        
+      
     if not(isJump): # Space key to use jump
         if keys[pygame.K_SPACE]:
             isJump = True
             right = False
             left = False
             walkCount = 0
-        
+
+#    if jumpCount >= -10:
+#             neg = 1
+#             if jumpCount < 0:
+#                 neg = -1
+#             y -= (jumpCount ** 2) * 0.5 * neg
+#             jumpCount -= 1
+#         else:
+#             isJump = False
+#             jumpCount = 10
     else:
 
-        if jumpCount >= -10:
-            neg = 1
-            if jumpCount < 0:
-                neg = -1
-            y -= (jumpCount ** 2) * 0.5 * neg
-            if Block1.colliderect(hitbox):
-                if neg > 0:
-                    print("we are above")
-                if neg < 0:
-                    print("we are below")
+        if jumpCount > 0:
+            hitbox.y -= vel
             jumpCount -= 1
+            if Block1.colliderect(hitbox):
+                hitbox.y = y
+                jump = False
+                jumpCount = 10
+                
+            
+           
             
         else:
             isJump = False
             jumpCount = 10
-            
+            gravity()
+   
+        
     redrawGameWindow()
 
 pygame.quit()
