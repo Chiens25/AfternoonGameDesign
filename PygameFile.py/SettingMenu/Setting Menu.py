@@ -5,7 +5,6 @@ import pygame, os, time, random, math, datetime, sys
 from pygame import mixer
 pygame.init()
 
-
 # print(pygame.font.get_fonts())
 # pygame.time.delay(10000)
 TITLE_FONT = pygame.font.SysFont('comicsans', 40)
