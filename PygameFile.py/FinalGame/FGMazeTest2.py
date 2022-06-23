@@ -1,4 +1,6 @@
+
 # Sydney Chien
+# 06/14/2022
 
 import pygame, os, time, random, math, datetime, sys
 from pygame import mixer
@@ -27,7 +29,7 @@ redClr = (255,0,0)
 cyanClr = (0, 255, 177)
 
 #images
-bg = pygame.image.load("PygameFile.py\Images\\bgSmaller.jpg")
+bg = colors.get("white")
 char = pygame.image.load("PygameFile.py\Images\PixelArtTutorial.png")
 char = pygame.transform.scale(char, (50,50))
 # screen.blit(bg, (0,0))
@@ -69,17 +71,17 @@ background = colors.get("grey")
 colorTheme = colors.get("white")
 
 def game2():
-    global insSquare, rad, yb, xb
+    global insSquare, rad, yb, xb, cx, cy
     score = 0
     screen.fill(colors.get('white'))
     pygame.display.update()
     Game=True
     while Game:
-        screen.blit(bg, (0,0))
         # screen.fill(backgrnd)
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
-                print("quit")
+                pygame.quit()
+                sys.exit()
         keys= pygame.key.get_pressed() #this is a list
         #mve square
         if keys[pygame.K_RIGHT] and square.x < WIDTH -(wb):
@@ -127,6 +129,5 @@ def game2():
         pygame.draw.rect(screen, colors.get("red"), insSquare)
         pygame.display.update()
         pygame.time.delay(5)
-
 
 game2()
