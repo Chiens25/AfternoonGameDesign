@@ -582,7 +582,7 @@ def game1():
             "                                ",
             "                                ",
             "                                ",
-            "      WWWWWWWWWWWWW     WWWWWWWWWWWWWW",
+            "      WWWWWWWWWWWWW    WWWWWWWWWWWWWWW",
             "      W           W                  W",
             "      W  WWWW  W  W     WWWW  W WWW  W",
             "      W     W  W        W     W   W  W",
