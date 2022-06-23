@@ -368,8 +368,6 @@ def instruction():
                     menu()
 
 
-score = 0
-
 player = 'r'
 
 walkRight = [pygame.image.load('PygameFile.py\MovingImages\R1.png'), pygame.image.load('PygameFile.py\MovingImages\R2.png'), pygame.image.load('PygameFile.py\MovingImages\R3.png'), pygame.image.load('PygameFile.py\MovingImages\R4.png'), pygame.image.load('PygameFile.py\MovingImages\R5.png'), pygame.image.load('PygameFile.py\MovingImages\R6.png'), pygame.image.load('PygameFile.py\MovingImages\R7.png'), pygame.image.load('PygameFile.py\MovingImages\R8.png'), pygame.image.load('PygameFile.py\MovingImages\R9.png')]
@@ -385,15 +383,9 @@ y = 600
 width = 64
 height = 64
 
-hitbox = pygame.Rect(x,y,width, height)
-
-vel = 5
-isJump = False
-jumpCount = 10
-left = False
-right = False
-walkCount = 0
-Block1 = pygame.Rect(100, 500, 100, 50)
+score = 0
+current_time = 0
+button_press_time = 0
 
 # RPS Level 1
 def game1():
@@ -513,7 +505,7 @@ def game1():
                                   
 
     def maze():
-        global screen, score
+        global screen, score, button_press_time
         pygame.time.delay(200)
         screen.fill("yellow")
         Win = GIANT_FONT.render(("YOU WON!"), 1, colors.get("white"))
@@ -601,7 +593,7 @@ def game1():
             "      W  W  WWWWWWW  WWWW  W W W     W",
             "      W  W     W  W  W   W W   W     W",
             "      WWWW  W  W  W  WW    W WWW     W",
-            "      W     W    W    W  WW           W",
+            "      W     W    W    W  WW          W",
             "      WWWWWWWWWWWWWWW       WWWWWWWWWW",
             "      W W      WW        W      W    W",
             "      W W   WWWW   WWW   W   WWW     W",
@@ -624,9 +616,16 @@ def game1():
             y += 16
             x = 0
         
+        
+        
+        pygame.display.update() 
+        pygame.time.delay(1000)
 
         running = True
         while running:
+            clock.tick(60)
+            pygame.time.get_ticks()
+           
             clock.tick(60)
 
             for event in pygame.event.get():
@@ -649,6 +648,7 @@ def game1():
                 player.move(0, -2)
             if key[pygame.K_DOWN]:
                 player.move(0, 2)
+                
         
             # Just added this to make it slightly fun ;)
             if player.rect.colliderect(end_rect):
@@ -667,6 +667,7 @@ def game1():
 
        
     def quit():
+        global score
         pygame.time.delay(500)
         screen.fill("red")
         Tie = GIANT_FONT.render(("SCORE: "+ str(score)), 1, colors.get("white"))
@@ -703,10 +704,11 @@ def game1():
                         # Save score stuff
                         myFile = open("PygameFile.py\FinalGame\FGScoreL1.txt", 'a')
                         date=datetime.datetime.now()
-                        scrLine = str(score)+"\t\t\t "+ userName + "\t\t\t"+ date.strftime("%m-%d-%Y")+ "\n"
+                        scrLine = str(score)+"        "+ userName + "       "+ date.strftime("%m-%d-%Y")+ "       "+ "Level 1" + "\n"
                         myFile.write(scrLine)     # Print the high score
                         myFile.close() 
                         print(scrLine)
+                        score = 0
                         menu()
         
 
@@ -923,8 +925,6 @@ def game2():
         # Initialise pygame
         os.environ["SDL_VIDEO_CENTERED"] = "1"
         pygame.init()
-        
-    
 
         clock = pygame.time.Clock()
         walls = [] # List to hold the walls
@@ -958,7 +958,7 @@ def game2():
             "      W  W  WWWWWWW  WWWW  W W W     W",
             "      W  W     W  W  W   W W   W     W",
             "      WWWW  W  W  W  WW    W WWW     W",
-            "      W     W    W    W  WW           W",
+            "      W     W    W    W  WW          W",
             "      WWWWWWWWWWWWWWW       WWWWWWWWWW",
             "      W W      WW        W      W    W",
             "      W W   WWWW   WWW   W   WWW     W",
@@ -980,11 +980,26 @@ def game2():
                 x += 16
             y += 16
             x = 0
-        
+            
+        old_time = pygame.time.get_ticks()
+
+
 
         running = True
         while running:
             clock.tick(60)
+            pygame.time.get_ticks()
+        
+            
+            current_time = pygame.time.get_ticks()
+            if current_time - old_time > 60000: # 60 seconds to finish
+                quit() # Give score, ask to play again or leave
+                                                                                       # Subtract from 60 for countDOWN
+            countdown = (f"COUNTDOWN: {60 - (current_time - old_time)//1000} seconds") # Convert milliseconds to seconds 
+            print(countdown)
+            pygame.display.flip()
+            clock.tick(60)
+            
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -994,8 +1009,8 @@ def game2():
                     mousePos = pygame.mouse.get_pos()
                     mx = mousePos[0]
                     my = mousePos[1]
-                    
-        
+               
+                            
             # Move the player if an arrow key is pressed
             key = pygame.key.get_pressed()
             if key[pygame.K_LEFT]:
@@ -1006,14 +1021,22 @@ def game2():
                 player.move(0, -2)
             if key[pygame.K_DOWN]:
                 player.move(0, 2)
+                
         
-            # Just added this to make it slightly fun ;)
+            # Red Rect gets hit -> Game end 
             if player.rect.colliderect(end_rect):
-                score += 1
-                quit()
+                score += 1 # Earn a point
+                quit() # Keep Playing/Leave game function
         
+            CDcolor = "white"
+            if current_time - old_time > 50000:
+                CDcolor = "red"
             # Draw the scene
             screen.fill((0, 0, 0))
+            CD = TITLE_FONT.render((countdown), 1, colors.get(CDcolor))
+            xd = WIDTH//2 - (CD.get_width()//2)
+            screen.blit(CD, (xd, 30))\
+
             for wall in walls:
                 pygame.draw.rect(screen, (255, 255, 255), wall.rect)
             pygame.draw.rect(screen, (255, 0, 0), end_rect)
@@ -1058,9 +1081,9 @@ def game2():
                         RPS()
                     if Button_2.collidepoint(mx, my):
                         # Save score stuff
-                        myFile = open("PygameFile.py\FinalGame\FGScoreL2.txt", 'a')
+                        myFile = open("PygameFile.py\FinalGame\FGScoreL1.txt", 'a')
                         date=datetime.datetime.now()
-                        scrLine = str(score)+"\t\t\t "+ userName + "\t\t\t"+ date.strftime("%m-%d-%Y")+ "\n"
+                        scrLine = str(score)+"        "+ userName + "       "+ date.strftime("%m-%d-%Y")+"       "+ "Level 2" +"\n"
                         myFile.write(scrLine)     # Print the high score
                         myFile.close() 
                         print(scrLine)
@@ -1284,7 +1307,7 @@ def game3():
         
     
 
-        clock = pygame.time.Clock()
+        clock = pygame.time.Clock() # Create a clock for accurate time
         walls = [] # List to hold the walls
         player = Player() # Create the player
         
@@ -1316,7 +1339,7 @@ def game3():
             "      W  W  WWWWWWW  WWWW  W W W     W",
             "      W  W     W  W  W   W W   W     W",
             "      WWWW  W  W  W  WW    W WWW     W",
-            "      W     W    W    W  WW           W",
+            "      W     W    W    W  WW          W",
             "      WWWWWWWWWWWWWWW       WWWWWWWWWW",
             "      W W      WW        W      W    W",
             "      W W   WWWW   WWW   W   WWW     W",
@@ -1339,10 +1362,23 @@ def game3():
             y += 16
             x = 0
         
+        old_time = pygame.time.get_ticks()
 
         running = True
         while running:
             clock.tick(60)
+            pygame.time.get_ticks()
+        
+            
+            current_time = pygame.time.get_ticks()
+            if current_time - old_time > 30000: # 30 seconds to finish
+                quit() # Give score, ask to play again or leave
+                                                                                       # Subtract from 60 for countDOWN
+            countdown = (f"COUNTDOWN: {30 - (current_time - old_time)//1000} seconds") # Convert milliseconds to seconds 
+            print(countdown)
+            pygame.display.flip()
+            clock.tick(60)
+            
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -1352,8 +1388,8 @@ def game3():
                     mousePos = pygame.mouse.get_pos()
                     mx = mousePos[0]
                     my = mousePos[1]
-                    
-        
+               
+                            
             # Move the player if an arrow key is pressed
             key = pygame.key.get_pressed()
             if key[pygame.K_LEFT]:
@@ -1364,14 +1400,24 @@ def game3():
                 player.move(0, -2)
             if key[pygame.K_DOWN]:
                 player.move(0, 2)
+                
         
-            # Just added this to make it slightly fun ;)
+            # Red Rect gets hit -> Game end 
             if player.rect.colliderect(end_rect):
-                score += 1
-                quit()
-        
+                score += 1 # Earn a point
+                quit() # Keep Playing/Leave game function
+
+            CDcolor = "white"
+            if current_time - old_time > 25000:
+                CDcolor = "red"
             # Draw the scene
             screen.fill((0, 0, 0))
+            CD = TITLE_FONT.render((countdown), 1, colors.get(CDcolor))
+            xd = WIDTH//2 - (CD.get_width()//2)
+            screen.blit(CD, (xd, 30))\
+
+
+
             for wall in walls:
                 pygame.draw.rect(screen, (255, 255, 255), wall.rect)
             pygame.draw.rect(screen, (255, 0, 0), end_rect)
@@ -1416,9 +1462,9 @@ def game3():
                         RPS()
                     if Button_2.collidepoint(mx, my):
                         # Save score stuff
-                        myFile = open("PygameFile.py\FinalGame\FGScoreL3.txt", 'a')
+                        myFile = open("PygameFile.py\FinalGame\FGScoreL1.txt", 'a')
                         date=datetime.datetime.now()
-                        scrLine = str(score)+"\t\t\t "+ userName + "\t\t\t"+ date.strftime("%m-%d-%Y")+ "\n"
+                        scrLine = str(score)+"       "+ userName + "       "+ date.strftime("%m-%d-%Y")+ "        "+ "Level 3" +"\n"
                         myFile.write(scrLine)     # Print the high score
                         myFile.close() 
                         print(scrLine)
@@ -1477,6 +1523,14 @@ def scoreboard():
     xd = WIDTH//2 - (Title.get_width()//2)
     screen.blit(Title, (xd, 50))\
 
+    # Back button
+    Button_Back = pygame.Rect(20, 20, 100, 50)
+    pygame.draw.rect(screen, colors.get("red"), Button_Back)
+    textBack = MENU_FONT.render("Back", 1, colors.get("black"))
+    screen.blit(textBack, (25, 25))
+    pygame.display.update()
+    pygame.time.delay(50)
+
     # Open Scoreboard File
     myFile = open("PygameFile.py\FinalGame\FGScoreL1.txt", "r")
     content = myFile.readlines()
@@ -1493,46 +1547,21 @@ def scoreboard():
 
     myFile.close()
 
-    # Open Scoreboard File
-    myFile = open("PygameFile.py\FinalGame\FGScoreL2.txt", "r")
-    content = myFile.readlines()
-
-
-    # Print instructions
-    li = 150 
-    for line in content:
-        Scores = MENU_FONT.render(line[0:-1], 1, colors.get('black')) 
-        screen.blit(Scores, (250, li))
-        pygame.display.update()
-        pygame.time.delay(1000)
-        li += 40 # Add 40 pixels between each printed line
-
-    myFile.close()
-
-    # Open Scoreboard File
-    myFile = open("PygameFile.py\FinalGame\FGScoreL3.txt", "r")
-    content = myFile.readlines()
-
-
-    # Print instructions
-    li = 150 
-    for line in content:
-        Scores = MENU_FONT.render(line[0:-1], 1, colors.get('black')) 
-        screen.blit(Scores, (500, li))
-        pygame.display.update()
-        pygame.time.delay(1000)
-        li += 40 # Add 40 pixels between each printed line
-
-    myFile.close()
-
+    
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 menu()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mousePos = pygame.mouse.get_pos()
+                mx = mousePos[0]
+                my = mousePos[1]
+                if Button_Back.collidepoint(mx, my):
+                    menu()
+        
 
 # Exit
 def exit():
-    print("here")
     screen.fill(colorTheme)
     Title = TITLE_FONT.render("Bye Bye", 1, colors.get("black"))
     xd = WIDTH//2 - (Title.get_width()//2)
@@ -1540,15 +1569,8 @@ def exit():
     pygame.display.update()
     pygame.time.delay(1000)
 
-    if high > 50:
-            myFile = open("PygameFile\MenuScore.txt", 'a')
-            date=datetime.datetime.now()
-            scrLine = str(high) + "\t"+ date.strftime("%m-%d-%Y")+ "\n"
-            myFile.write(scrLine)
-            myFile.close()    
-
     pygame.quit()
-    sys.quit()
+    sys.exit()
     print("you quit")
 
 # Call functions

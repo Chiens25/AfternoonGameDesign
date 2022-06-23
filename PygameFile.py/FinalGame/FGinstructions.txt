@@ -2,9 +2,9 @@ This game consists of a Level 1, 2, and 3
 Level 1 is the easiest. You will play a game of Rock, Paper, Scissors
 If you win, you will enter a maze. 
 Use the arrow keys to reach the star and score a point.
-Level 2 is the same as Level 1, except the maze is timed.
+Level 2 is the same as Level 1, except you have 60 seconds.
 If you don't finish before time runs out, you forfeit the point.
-Level 3 is the same as Level 2, except the maze has obstacles.
-If you touch an obstacle, you forfeit the point.
+Level 3 is the same as Level 2, except you have 30 seconds.
+
 
 Ready for Level 1?:
