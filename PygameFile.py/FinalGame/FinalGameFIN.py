@@ -59,8 +59,8 @@ speed = 2
 run = True
 high = 0
 colorTheme = Wclr # Set to colorTheme to change var in settings
-# mixer.music.load('PygameFile.py\journey.wav') # Play music
-# mixer.music.play(-1)
+mixer.music.load('PygameFile.py\journey.wav') # Play music
+mixer.music.play(-1)
 
 # Settings
 def settings():
@@ -148,7 +148,6 @@ def settings():
 
     # Make Color Backgrounds Change Color Var, Change WIDTH and HEIGHT Var, Play Sound
     while True:
-        print("I am here")
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 menu() 
@@ -216,12 +215,10 @@ def user():
     while run:
         for event in pygame.event.get():
                 if event.type == pygame.QUIT: # Exit button
-                    print(userName)
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.KEYDOWN: # Return -> userName set, move to menu
                     if event.key == pygame.K_RETURN:
-                        print(userName)
                         menu()
                     if event.key == pygame.K_BACKSPACE: # Delete -> userName is all letters except the last
                         userName = userName[:-1]
@@ -357,7 +354,6 @@ def instruction():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.quit()
-                print("you quit")
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mousePos = pygame.mouse.get_pos()
                 mx = mousePos[0]
@@ -673,15 +669,15 @@ def game1():
         screen.blit(Tie, (xd, 200))\
         
         #creating buttons
-        Button_1 = pygame.Rect(200, 550, 100, 50)
-        Button_2 = pygame.Rect(400, 550, 100, 50)
-        pygame.draw.rect(screen, colors.get("pink"), Button_1)
-        pygame.draw.rect(screen, colors.get("pink"), Button_2)
+        Button_1 = pygame.Rect(150, 550, 150, 50)
+        Button_2 = pygame.Rect(400, 550, 150, 50)
+        pygame.draw.rect(screen, colors.get("white"), Button_1)
+        pygame.draw.rect(screen, colors.get("white"), Button_2)
 
         # Render yes and no
         text1 = MENU_FONT.render("Keep Playing", 1, colors.get("black"))
         text2 = MENU_FONT.render("Leave Game", 1, colors.get("black"))
-        screen.blit(text1, (225, 560))
+        screen.blit(text1, (175, 560))
         screen.blit(text2, (425, 560))
         pygame.display.update()
 
@@ -1054,15 +1050,15 @@ def game2():
         screen.blit(Tie, (xd, 200))\
 
         #creating buttons
-        Button_1 = pygame.Rect(200, 550, 100, 50)
-        Button_2 = pygame.Rect(400, 550, 100, 50)
-        pygame.draw.rect(screen, colors.get("pink"), Button_1)
-        pygame.draw.rect(screen, colors.get("pink"), Button_2)
+        Button_1 = pygame.Rect(150, 550, 150, 50)
+        Button_2 = pygame.Rect(400, 550, 150, 50)
+        pygame.draw.rect(screen, colors.get("white"), Button_1)
+        pygame.draw.rect(screen, colors.get("white"), Button_2)
 
-        #render yes and no
+        # Render yes and no
         text1 = MENU_FONT.render("Keep Playing", 1, colors.get("black"))
         text2 = MENU_FONT.render("Leave Game", 1, colors.get("black"))
-        screen.blit(text1, (225, 560))
+        screen.blit(text1, (175, 560))
         screen.blit(text2, (425, 560))
         pygame.display.update()
 
@@ -1072,7 +1068,6 @@ def game2():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.quit()
-                    print("you quit")
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     mousePos = pygame.mouse.get_pos()
                     mx = mousePos[0]
@@ -1437,15 +1432,15 @@ def game3():
         screen.blit(Tie, (xd, 200))\
 
         #creating buttons
-        Button_1 = pygame.Rect(200, 550, 100, 50)
-        Button_2 = pygame.Rect(400, 550, 100, 50)
-        pygame.draw.rect(screen, colors.get("pink"), Button_1)
-        pygame.draw.rect(screen, colors.get("pink"), Button_2)
+        Button_1 = pygame.Rect(150, 550, 150, 50)
+        Button_2 = pygame.Rect(400, 550, 150, 50)
+        pygame.draw.rect(screen, colors.get("white"), Button_1)
+        pygame.draw.rect(screen, colors.get("white"), Button_2)
 
-        #render yes and no
+        # Render yes and no
         text1 = MENU_FONT.render("Keep Playing", 1, colors.get("black"))
         text2 = MENU_FONT.render("Leave Game", 1, colors.get("black"))
-        screen.blit(text1, (225, 560))
+        screen.blit(text1, (175, 560))
         screen.blit(text2, (425, 560))
         pygame.display.update()
 
@@ -1455,7 +1450,6 @@ def game3():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.quit()
-                    print("you quit")
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     mousePos = pygame.mouse.get_pos()
                     mx = mousePos[0]
@@ -1572,7 +1566,6 @@ def exit():
 
     pygame.quit()
     sys.exit()
-    print("you quit")
 
 # Call functions
 user()
