@@ -111,18 +111,14 @@ def settings():
     # Create Shape and Color Buttons
     Button_Size1 = pygame.Rect(w3, 350, 230, 50)
     Button_Size2 = pygame.Rect(w3, 420, 230, 50)
-    Button_Size3 = pygame.Rect(w3, 490, 230, 50)
-    pygame.draw.rect(screen, colors.get("grey"), Button_Size1)
-    pygame.draw.rect(screen, colors.get("grey"), Button_Size2)
-    pygame.draw.rect(screen, colors.get("grey"), Button_Size3)
+    pygame.draw.rect(screen, colors.get("violet"), Button_Size1)
+    pygame.draw.rect(screen, colors.get("violet"), Button_Size2)
 
     # Create and Position Text
-    textSize1 = MENU_FONT.render("7 by 7", 1, colors.get("black"))
-    textSize2= MENU_FONT.render("7 by 9", 1, colors.get("black"))
-    textSize3 = MENU_FONT.render("7 by 5", 1, colors.get("black"))
+    textSize1 = MENU_FONT.render("+100", 1, colors.get("black"))
+    textSize2= MENU_FONT.render("-100", 1, colors.get("black"))
     screen.blit(textSize1, (w3, 360))
     screen.blit(textSize2, (w3, 430))
-    screen.blit(textSize3, (w3, 500))
     pygame.display.update()
     pygame.time.delay(50)
 
@@ -135,14 +131,14 @@ def settings():
     # Create Buttons
     Button_SoundY = pygame.Rect(WIDTH * .3, 550, 120, 120)
     Button_SoundN = pygame.Rect(WIDTH * .6, 550, 120, 120)
-    pygame.draw.rect(screen, colors.get("grey"), Button_SoundY)
-    pygame.draw.rect(screen, colors.get("grey"), Button_SoundN)
+    pygame.draw.rect(screen, colors.get("violet"), Button_SoundY)
+    pygame.draw.rect(screen, colors.get("violet"), Button_SoundN)
   
     # Create Text
     textSoundY = MENU_FONT.render("On", 1, colors.get("black"))
     textSoundN= MENU_FONT.render("Off", 1, colors.get("black"))
-    screen.blit(textSoundY, (WIDTH * .3, 560))
-    screen.blit(textSoundN, (WIDTH * .6, 560))
+    screen.blit(textSoundY, (WIDTH * .35, 570))
+    screen.blit(textSoundN, (WIDTH * .65, 570))
     pygame.display.update()
     pygame.time.delay(50)
 
@@ -164,16 +160,10 @@ def settings():
                 if Button_Back.collidepoint(mx, my):
                     menu()
                 if Button_Size1.collidepoint(mx, my):
-                    WIDTH == 700
-                    HEIGHT = 700
+                    WIDTH += 100
                     screen = pygame.display.set_mode((WIDTH, HEIGHT))
                 if Button_Size2.collidepoint(mx, my):
-                    WIDTH == 900
-                    HEIGHT = 700
-                    screen = pygame.display.set_mode((WIDTH, HEIGHT))
-                if Button_Size3.collidepoint(mx, my):
-                    WIDTH == 500
-                    HEIGHT = 700
+                    WIDTH -= 100
                     screen = pygame.display.set_mode((WIDTH, HEIGHT))
                 if Button_SoundY.collidepoint(mx, my):
                     mixer.music.play(-1)
@@ -352,8 +342,7 @@ def instruction():
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.quit()
+                menu()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mousePos = pygame.mouse.get_pos()
                 mx = mousePos[0]
@@ -394,7 +383,7 @@ def game1():
             lose()
 
     def RPS():
-        global computer, player
+        global computer, player, WIDTH, HEIGHT
 
         # Blit starting objects in position
         screen.blit(bg, (0,0)) 
@@ -438,8 +427,7 @@ def game1():
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: # Quit - immediately exit the window
-                    pygame.quit()
-                    sys.exit() 
+                    menu()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     mousePos = pygame.mouse.get_pos()
                     mx = mousePos[0]
@@ -627,8 +615,7 @@ def game1():
            
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: # Quit -> immediately closes window
-                    pygame.quit()
-                    sys.exit()
+                    menu()
         
             # Move the player if an arrow key is pressed
             key = pygame.key.get_pressed() # Provide a list of 11 keys
@@ -685,9 +672,7 @@ def game1():
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.quit()
-                    print("you quit")
+                    menu()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     mousePos = pygame.mouse.get_pos()
                     mx = mousePos[0]
@@ -805,8 +790,7 @@ def game2():
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: # Quit - immediately exit the window
-                    pygame.quit()
-                    sys.exit() 
+                    menu() 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     mousePos = pygame.mouse.get_pos()
                     mx = mousePos[0]
@@ -1066,8 +1050,7 @@ def game2():
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.quit()
+                    menu()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     mousePos = pygame.mouse.get_pos()
                     mx = mousePos[0]
@@ -1116,9 +1099,8 @@ def game2():
     Game = True
     while Game:
         for event in pygame.event.get():
-            if event.type==pygame.QUIT: # Quit -> Immediately close window
-                pygame.quit()
-                sys.exit()
+            if event.type==pygame.QUIT:
+                quit()
                 
         pygame.display.update() 
         pygame.time.delay(100)
@@ -1185,8 +1167,7 @@ def game3():
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: # Quit - immediately exit the window
-                    pygame.quit()
-                    sys.exit() 
+                    menu()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     mousePos = pygame.mouse.get_pos()
                     mx = mousePos[0]
@@ -1448,8 +1429,7 @@ def game3():
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.quit()
+                    menu()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     mousePos = pygame.mouse.get_pos()
                     mx = mousePos[0]
@@ -1499,9 +1479,7 @@ def game3():
     while Game:
         for event in pygame.event.get(): 
             if event.type==pygame.QUIT: # Quit -> Immediately close window
-                #Menu(mainTitle,messageMenu)
-                pygame.quit()
-                sys.exit()
+                    quit()
                 
         pygame.display.update() 
         pygame.time.delay(100)
